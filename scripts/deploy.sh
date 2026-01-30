@@ -21,24 +21,24 @@ cd ..
 # Example PM2 startup (this might need customization based on ecosystem.config.js if you create one)
 # For now, we'll try to start/restart straightforwardly using typical names.
 
-# Check if 'afs-server' exists, if so restart, else start
-if pm2 list | grep -q "afs-server"; then
-    pm2 restart afs-server
-else
-    cd server
-    pm2 start app.js --name afs-server
-    cd ..
+# Check for Docker
+if ! command -v docker &> /dev/null; then
+    echo "Installing Docker..."
+    curl -fsSL https://get.docker.com | sh
 fi
 
-# Check if 'afs-web' exists, if so restart, else start
-if pm2 list | grep -q "afs-web"; then
-    pm2 restart afs-web
-else
-    cd web
-    pm2 start npm --name "afs-web" -- start
-    cd ..
-fi
+# Pull latest code (already done at the beginning, but good for redundancy if this script is run standalone)
+git pull origin main
 
-pm2 save
+# Stop old PM2 processes (if any are still running from previous deployments)
+pm2 delete all || true
+
+# Deploy with Docker Compose
+docker compose up -d --build
+
+# Prune unused images
+docker image prune -f
+
+echo "Deployment via Docker complete!"
 
 echo ">>> Deployment Complete!"
