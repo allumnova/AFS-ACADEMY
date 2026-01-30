@@ -1,0 +1,55 @@
+# AFS Academy - Development Roadmap
+
+This document outlines the phase-wise completion of the AFS Academy project, covering Web, Server, and Mobile modules.
+
+## User Review Required
+
+> [!IMPORTANT]
+> The live streaming module (Phase 5) requires a choice between 1:1, Group, or Webinar style for optimized performance.
+> Payment gateway integration (Phase 3) will require merchant credentials for Razorpay/Stripe.
+
+## Proposed Changes
+
+### Phase 1: Foundation & RBAC
+**Goal:** Establish user management and role-based access control.
+- [ ] **User Management:** Implement basic login/signup flow (email/password) as a placeholder.
+- [ ] **User Profiles:** Enable profile editing and document uploads for faculty and students.
+- [ ] **RBAC:** Finalize permissions for Super Admin, Admin, Faculty, and Student roles across all platforms.
+
+### Phase 2: Academic Core
+**Goal:** Implement the primary learning management features.
+- [ ] **Course Management:** CRUD operations for courses, categories, and curriculum.
+- [ ] **Lecture Management:** Upload and manage recorded lectures (Cloudinary/S3 integration).
+- [ ] **Enrollment Flow:** Integration between course selection and student dashboard.
+
+### Phase 3: Operations & Payments
+**Goal:** Handle financial and organizational tasks.
+- [ ] **Online Attendance:** Implement QR-based attendance tracking for live sessions.
+- [ ] **Fee Management:** Automated invoice generation and fee tracking.
+- [ ] **Payment Integration:** Secure checkout flow via Razorpay/Stripe.
+
+### Phase 4: Engagement & Communication
+**Goal:** Improve interaction between students and faculty.
+- [ ] **Media Gallery:** Role-based access to photo/video galleries of academy events.
+- [ ] **Feedback System:** Rating and review module for completed courses.
+- [ ] **Notifications:** Push notifications (Firebase) and Email/SMS alerts for important updates.
+
+### Phase 5: Advanced Features & OTP
+**Goal:** Provide cutting-edge learning experiences and secure auth.
+- [ ] **Auth Service:** Implement OTP-based verification for login/signup (Final security hardening).
+- [ ] **Live Streaming:** Integration with Agora or Zoom SDK for real-time classes.
+- [ ] **Admin Dashboard:** Comprehensive analytics for student performance and revenue.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- Server: Run `npm test` for API endpoint verification.
+- Web: Run `npm run lint` and `npm run build` to ensure production readiness.
+
+### Manual Verification
+1. **Auth Flow:** Verify OTP reception and successful login for a new student.
+2. **Payment Flow:** Test a transaction in 'Sandbox' mode and verify invoice generation.
+3. **Attendance:** Scan a test QR code and check if the record updates in the database.
+4. **Live Stream:** Start a session as Faculty and join as Student to verify low-latency streaming.
