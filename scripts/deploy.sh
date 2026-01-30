@@ -39,6 +39,12 @@ docker compose up -d --build
 # Prune unused images
 docker image prune -f
 
+echo "Waiting for services to initialize..."
+sleep 15
+
+echo "Seeding database..."
+docker exec afs-server node scripts/seed_data.js
+
 echo "Deployment via Docker complete!"
 
 echo ">>> Deployment Complete!"
