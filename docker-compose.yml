@@ -1,14 +1,27 @@
 version: '3.8'
 
 services:
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: afs_academy
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
   server:
     build: ./server
     ports:
       - "5000:5000"
     environment:
       - PORT=5000
-      - DB_URL=your_mysql_url
+      - DB_URL=mysql://root:root@db:3306/afs_academy
       - JWT_SECRET=your_secret
+    depends_on:
+      - db
     restart: always
 
   web:
@@ -20,3 +33,6 @@ services:
     depends_on:
       - server
     restart: always
+
+volumes:
+  mysql_data:

@@ -1,0 +1,134 @@
+"use client"
+
+import * as React from "react"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+
+import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import axios from "axios"
+
+export default function RegisterPage() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState<boolean>(false)
+    const [error, setError] = React.useState<string>("")
+
+    async function onSubmit(event: React.SyntheticEvent) {
+        event.preventDefault()
+        setIsLoading(true)
+        setError("")
+
+        const target = event.target as typeof event.target & {
+            name: { value: string };
+            email: { value: string };
+            password: { value: string };
+        };
+
+        try {
+            const response = await axios.post("http://localhost:5000/api/auth/register", {
+                name: target.name.value,
+                email: target.email.value,
+                password: target.password.value,
+                role: 'student' // Default to student
+            });
+
+            // Redirect to login on success
+            router.push("/login?registered=true");
+
+        } catch (err: any) {
+            setError(err.response?.data?.message || "Something went wrong.");
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    return (
+        <>
+            <div className="flex flex-col space-y-2 text-center mb-6">
+                <div className="mx-auto h-12 w-12 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 mb-4">
+                    <span className="text-white font-bold text-2xl">A</span>
+                </div>
+                <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+                    Create an account
+                </h1>
+                <p className="text-sm text-slate-500">
+                    Join AFS Academy and start your learning journey
+                </p>
+            </div>
+            <div className={cn("grid gap-6")}>
+                <form onSubmit={onSubmit}>
+                    <div className="grid gap-4">
+                        <div className="grid gap-2">
+                            <Label className="font-medium text-slate-600" htmlFor="name">
+                                Full Name
+                            </Label>
+                            <Input
+                                id="name"
+                                placeholder="John Doe"
+                                type="text"
+                                autoCapitalize="words"
+                                autoComplete="name"
+                                disabled={isLoading}
+                                className="h-11 bg-slate-50 border-slate-200 focus:bg-white transition-all"
+                                required
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label className="font-medium text-slate-600" htmlFor="email">
+                                Email Address
+                            </Label>
+                            <Input
+                                id="email"
+                                placeholder="name@example.com"
+                                type="email"
+                                autoCapitalize="none"
+                                autoComplete="email"
+                                autoCorrect="off"
+                                disabled={isLoading}
+                                className="h-11 bg-slate-50 border-slate-200 focus:bg-white transition-all"
+                                required
+                            />
+                        </div>
+                        <div className="grid gap-2">
+                            <Label className="font-medium text-slate-600" htmlFor="password">
+                                Password
+                            </Label>
+                            <Input
+                                id="password"
+                                placeholder="Create a password"
+                                type="password"
+                                autoCapitalize="none"
+                                autoComplete="new-password"
+                                disabled={isLoading}
+                                className="h-11 bg-slate-50 border-slate-200 focus:bg-white transition-all"
+                                required
+                            />
+                        </div>
+                        {error && (
+                            <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-sm text-red-600 flex items-center">
+                                {error}
+                            </div>
+                        )}
+                        <Button disabled={isLoading} className="h-11 text-base shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all">
+                            {isLoading && (
+                                <span className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                            )}
+                            Sign Up
+                        </Button>
+                    </div>
+                </form>
+            </div>
+
+            <div className="mt-8 text-center text-sm">
+                <p className="text-slate-500">
+                    Already have an account?{" "}
+                    <Link href="/login" className="font-semibold text-primary hover:underline underline-offset-4">
+                        Sign In
+                    </Link>
+                </p>
+            </div>
+        </>
+    )
+}
