@@ -5,10 +5,13 @@ import 'package:video_player/video_player.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/course_model.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../../features/downloads/data/download_repository.dart';
+import '../../../../core/constants/api_constants.dart';
+import '../../../downloads/data/download_repository.dart';
+import '../../../payments/data/payment_repository.dart';
+import '../../data/course_repository.dart';
 
 class VideoPlayerScreen extends ConsumerStatefulWidget {
-  final String courseId; // We could pass the full Course object via extra
+  final String courseId;
   final Course? courseObj;
 
   const VideoPlayerScreen({super.key, required this.courseId, this.courseObj});
@@ -18,6 +21,9 @@ class VideoPlayerScreen extends ConsumerStatefulWidget {
 }
 
 class _VideoPlayerScreenState extends ConsumerState<VideoPlayerScreen> {
+  Course? _course;
+  bool _isEnrolled = false;
+  bool _checkingEnrollment = true;
   VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
   bool _isLoading = true;
@@ -29,7 +35,26 @@ class _VideoPlayerScreenState extends ConsumerState<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    _checkDownloadStatus();
+    _course = widget.courseObj;
+    _loadCourseData();
+  }
+
+  Future<void> _loadCourseData() async {
+    setState(() => _checkingEnrollment = true);
+    try {
+      final repo = ref.read(courseRepositoryProvider);
+      // Fetch full details (including lectures)
+      _course = await repo.getCourseById(widget.courseId);
+      _isEnrolled = await repo.isEnrolled(widget.courseId);
+
+      await _checkDownloadStatus();
+    } catch (e) {
+      debugPrint("Error loading course data: $e");
+    } finally {
+      if (mounted) {
+        setState(() => _checkingEnrollment = false);
+      }
+    }
   }
 
   Future<void> _checkDownloadStatus() async {
@@ -77,6 +102,52 @@ class _VideoPlayerScreenState extends ConsumerState<VideoPlayerScreen> {
       setState(() {
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _initiatePayment() async {
+    try {
+      final payRepo = ref.read(paymentRepositoryProvider);
+      final order = await payRepo.createOrder(widget.courseId);
+
+      // In a real app, you'd open Cashfree SDK/Webview here.
+      // For Demo, we'll simulate verification after a delay.
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Processing Payment...")),
+        );
+      }
+
+      await Future.delayed(const Duration(seconds: 2));
+
+      final success = await payRepo.verifyPayment(order['order_id']);
+
+      if (success) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Success! You are now enrolled."),
+              backgroundColor: Colors.green,
+            ),
+          );
+          _loadCourseData(); // Refresh state
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Payment failed or cancelled."),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Payment Error: $e")),
+        );
+      }
     }
   }
 
@@ -130,110 +201,223 @@ class _VideoPlayerScreenState extends ConsumerState<VideoPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_checkingEnrollment && _course == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    final course = _course ?? widget.courseObj!;
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: SafeArea(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          course.title,
+          style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 18),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    color: Colors.black,
-                    child: _isLoading
-                        ? const Center(child: CircularProgressIndicator())
-                        : Chewie(controller: _chewieController!),
-                  ),
+            // Header / Video Selection
+            if (_isEnrolled)
+              AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  color: Colors.black,
+                  child: _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : Chewie(controller: _chewieController!),
                 ),
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.white),
-                    onPressed: () => Navigator.of(context).pop(),
+              )
+            else
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.network(
+                    ApiConstants.getImageUrl(course.thumbnail),
+                    height: 220,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            widget.courseObj?.title ?? "Course Video",
-                            style: GoogleFonts.outfit(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                        if (!_isDownloaded)
-                          _isDownloading
-                              ? CircularProgressIndicator(
-                                  value: _downloadProgress,
-                                )
-                              : IconButton(
-                                  onPressed: _startDownload,
-                                  icon: const Icon(
-                                    Icons.download,
-                                    color: Colors.blueAccent,
-                                  ),
-                                  tooltip: "Download for Offline",
-                                )
-                        else
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.check_circle,
-                                color: Colors.green,
+                  Container(
+                    height: 220,
+                    width: double.infinity,
+                    color: Colors.black.withValues(alpha: 0.3),
+                  ),
+                  const CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.white24,
+                    child: Icon(Icons.lock, color: Colors.white, size: 30),
+                  ),
+                ],
+              ),
+
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              course.category,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
                               ),
-                              const SizedBox(width: 4),
-                              Text(
-                                "Downloaded",
-                                style: GoogleFonts.outfit(
-                                  color: Colors.green,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              course.title,
+                              style: GoogleFonts.outfit(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      if (_isEnrolled && !_isDownloaded)
+                        _isDownloading
+                            ? CircularProgressIndicator(
+                                value: _downloadProgress)
+                            : IconButton(
+                                onPressed: _startDownload,
+                                icon: const Icon(
+                                  Icons.download_for_offline_outlined,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  if (!_isEnrolled) ...[
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.blue.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "LIFETIME ACCESS",
+                                style: TextStyle(
+                                  fontSize: 10,
                                   fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              Text(
+                                "₹${course.price}",
+                                style: GoogleFonts.outfit(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue.shade900,
                                 ),
                               ),
                             ],
                           ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.courseObj?.category ?? "General",
-                      style: GoogleFonts.outfit(
-                        fontSize: 14,
-                        color: Colors.blueGrey,
-                        fontWeight: FontWeight.w600,
+                          const Spacer(),
+                          ElevatedButton(
+                            onPressed: _initiatePayment,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 12,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Text("BUY NOW"),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Divider(),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 24),
+                  ],
+                  Text(
+                    "About this course",
+                    style: GoogleFonts.outfit(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    course.description,
+                    style: TextStyle(height: 1.5, color: Colors.grey.shade700),
+                  ),
+                  const SizedBox(height: 32),
+                  if (_isEnrolled) ...[
                     Text(
-                      "Description",
+                      "Course Content",
                       style: GoogleFonts.outfit(
                         fontSize: 18,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    Text(
-                      widget.courseObj?.description ??
-                          "No description available.",
-                      style: GoogleFonts.outfit(color: Colors.grey.shade600),
-                    ),
+                    const SizedBox(height: 16),
+                    if (course.lectures.isEmpty)
+                      const Text("No lectures available yet.")
+                    else
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: course.lectures.length,
+                        separatorBuilder: (_, __) => const Divider(),
+                        itemBuilder: (context, index) {
+                          final lecture = course.lectures[index];
+                          return ListTile(
+                            leading: CircleAvatar(
+                              backgroundColor: Colors.grey.shade100,
+                              child: Text(
+                                "${index + 1}",
+                                style: const TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              lecture.title,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            subtitle: Text(
+                              lecture.isLive ? "Live Session" : "Video Lesson",
+                            ),
+                            trailing: const Icon(Icons.play_circle_outline),
+                            onTap: () {
+                              // In a real app, update the video player source here
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content: Text("Loading: ${lecture.title}")),
+                              );
+                            },
+                          );
+                        },
+                      ),
                   ],
-                ),
+                ],
               ),
             ),
           ],

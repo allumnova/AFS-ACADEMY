@@ -1,3 +1,5 @@
+import 'lecture_model.dart';
+
 class Course {
   final String id;
   final String title;
@@ -6,6 +8,7 @@ class Course {
   final String thumbnail;
   final String category;
   final String level;
+  final List<Lecture> lectures;
 
   Course({
     required this.id,
@@ -15,6 +18,7 @@ class Course {
     required this.thumbnail,
     required this.category,
     required this.level,
+    this.lectures = const [],
   });
 
   factory Course.fromJson(Map<String, dynamic> json) {
@@ -26,6 +30,10 @@ class Course {
       thumbnail: json['thumbnail'] ?? '',
       category: json['category'] ?? 'General',
       level: json['level'] ?? 'beginner',
+      lectures: (json['lectures'] as List?)
+              ?.map((e) => Lecture.fromJson(e))
+              .toList() ??
+          [],
     );
   }
 }

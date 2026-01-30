@@ -1,0 +1,32 @@
+
+   info - The imported package 
+'path' isn't a dependency of the 
+importing package - lib\core\datab
+ase\local_database.dart:2:8 - 
+depend_on_referenced_packages
+   info - The prefix 'IO' isn't a 
+lower_case_with_underscores 
+identifier - lib\features\chat\dat
+a\chat_repository.dart:3:60 - 
+library_prefixes
+warning - The value of the local 
+variable 'appDir' isn't used - lib
+\features\downloads\data\download_
+repository.dart:19:13 - 
+unused_local_variable
+  error - The method 'pulse' 
+isn't defined for the type 
+'Animate' - lib\features\home\pres
+entation\screens\home_screen.dart:
+103:39 - undefined_method
+  error - Target of URI doesn't 
+exist: '../../courses/data/course_
+model.dart' - lib\features\home\pr
+esentation\widgets\course_card.dar
+t:6:8 - uri_does_not_exist
+  error - Undefined class 
+'Course' - lib\features\home\prese
+ntation\widgets\course_card.dart:9
+:9 - undefined_class
+
+

@@ -54,7 +54,7 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.4),
+        color: Colors.black.withValues(alpha: 0.4),
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -66,7 +66,7 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               border: Border(
-                bottom: BorderSide(color: Colors.white.withOpacity(0.1)),
+                bottom: BorderSide(color: Colors.white.withValues(alpha: 0.1)),
               ),
             ),
             child: Row(
@@ -81,7 +81,7 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
                 ),
                 Icon(
                   Icons.people,
-                  color: Colors.white.withOpacity(0.7),
+                  color: Colors.white.withValues(alpha: 0.7),
                   size: 18,
                 ),
               ],
@@ -125,7 +125,7 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
                           decoration: BoxDecoration(
                             color: msg.isMe
                                 ? Colors.blueAccent
-                                : Colors.white.withOpacity(0.1),
+                                : Colors.white.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Column(
@@ -166,10 +166,10 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white.withOpacity(0.1),
+                      fillColor: Colors.white.withValues(alpha: 0.1),
                       hintText: "Say something...",
                       hintStyle: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withValues(alpha: 0.5),
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -187,7 +187,7 @@ class _LiveChatOverlayState extends ConsumerState<LiveChatOverlay> {
                   onPressed: _sendMessage,
                   icon: const Icon(Icons.send, color: Colors.blueAccent),
                   style: IconButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.1),
+                    backgroundColor: Colors.white.withValues(alpha: 0.1),
                   ),
                 ),
               ],

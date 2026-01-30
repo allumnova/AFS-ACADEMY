@@ -2,7 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../courses/data/course_model.dart';
+import '../../../../core/constants/api_constants.dart';
+import '../../../courses/data/course_model.dart';
 
 class CourseCard extends StatelessWidget {
   final Course course;
@@ -11,11 +12,7 @@ class CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Handle localhost image URLs for Android Emulator
-    String imageUrl = course.thumbnail;
-    if (imageUrl.startsWith('/uploads')) {
-      imageUrl = 'http://10.0.2.2:5000$imageUrl';
-    }
+    final imageUrl = ApiConstants.getImageUrl(course.thumbnail);
 
     return GestureDetector(
       onTap: () {
@@ -30,7 +27,7 @@ class CourseCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -72,7 +69,8 @@ class CourseCard extends StatelessWidget {
                     style: GoogleFonts.outfit(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
+                      color:
+                          Theme.of(context).primaryColor.withValues(alpha: 0.8),
                     ),
                   ),
                   const SizedBox(height: 4),

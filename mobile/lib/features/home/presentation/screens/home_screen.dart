@@ -37,7 +37,7 @@ class HomeScreen extends ConsumerWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Theme.of(context).primaryColor,
-                      Theme.of(context).primaryColor.withOpacity(0.8),
+                      Theme.of(context).primaryColor.withValues(alpha: 0.8),
                     ],
                   ),
                 ),
@@ -82,7 +82,7 @@ class HomeScreen extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.red.withOpacity(0.3),
+                            color: Colors.red.withValues(alpha: 0.3),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),
@@ -93,14 +93,17 @@ class HomeScreen extends ConsumerWidget {
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.2),
+                              color: Colors.white.withValues(alpha: 0.2),
                               shape: BoxShape.circle,
                             ),
                             child: const Icon(
                               Icons.videocam,
                               color: Colors.white,
                             ),
-                          ).animate().pulse(infinite: true),
+                          )
+                              .animate(
+                                  onPlay: (controller) => controller.repeat())
+                              .scale(duration: 1000.ms),
                           const SizedBox(width: 16),
                           Expanded(
                             child: Column(
@@ -128,7 +131,7 @@ class HomeScreen extends ConsumerWidget {
                                 Text(
                                   "with Dr. Expert Faculty",
                                   style: GoogleFonts.outfit(
-                                    color: Colors.white.withOpacity(0.9),
+                                    color: Colors.white.withValues(alpha: 0.9),
                                     fontSize: 12,
                                   ),
                                 ),
