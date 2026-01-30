@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { EnrollButton } from "@/components/enroll-button"
 
+export const dynamic = 'force-dynamic'
+
 async function getCourses() {
     try {
         const res = await fetch("http://localhost:5000/api/courses", {

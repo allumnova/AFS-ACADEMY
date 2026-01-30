@@ -28,22 +28,35 @@ export function EnrollButton({ courseId, price, variant = "default", size = "def
                 return
             }
 
-            // Mocking a successful payment verification directly for demo
-            await axios.post("http://localhost:5000/api/payments/verify",
+            // 1. Create Order
+            const orderRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/orders`,
                 {
                     courseId,
                     amount: price,
-                    paymentId: `mock_pay_${Date.now()}`
+                    currency: "INR"
                 },
                 { headers: { Authorization: `Bearer ${token}` } }
             )
 
-            setEnrolled(true)
-            setTimeout(() => setEnrolled(false), 3000) // Reset after 3 seconds
+            const { payment_session_id } = orderRes.data
+
+            // 2. Load Cashfree SDK
+            const { load } = await import('@cashfreepayments/cashfree-js')
+            const cashfree = await load({
+                mode: "sandbox"
+            })
+
+            // 3. Initiate Checkout
+            await cashfree.checkout({
+                paymentSessionId: payment_session_id,
+                returnUrl: `${window.location.origin}/payments/verify?order_id=${orderRes.data.order_id}`,
+            })
+
+            // Note: The redirection happens automatically, so we don't need to manually setEnrolled here.
+
         } catch (error) {
-            console.error("Enrollment failed", error)
-            alert("Failed to enroll. Please try again.")
-        } finally {
+            console.error("Enrollment initiation failed", error)
+            alert("Failed to start payment. Please try again.")
             setLoading(false)
         }
     }

@@ -5,7 +5,7 @@ services:
     image: mysql:8.0
     container_name: afs-db
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: afs_academy
@@ -44,7 +44,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://72.61.250.54:5000/api
+      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
     depends_on:
       - server
     networks:

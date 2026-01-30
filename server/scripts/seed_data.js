@@ -90,6 +90,32 @@ async function seedDatabase() {
             });
         }
 
+        // 3. Create Enrollments & Payments (Seeding Revenue)
+        const allCourses = await Course.findAll();
+        const studentUser = student[0];
+
+        // Enroll student in first 2 courses with payments
+        for (let i = 0; i < 2; i++) {
+            const course = allCourses[i];
+
+            // Check if enrollment exists
+            const [enrollment, created] = await require('../models').Enrollment.findOrCreate({
+                where: { userId: studentUser.id, courseId: course.id },
+                defaults: { status: 'active' }
+            });
+
+            if (created) {
+                await require('../models').Payment.create({
+                    userId: studentUser.id,
+                    courseId: course.id,
+                    amount: course.price,
+                    status: 'completed',
+                    paymentMethod: 'credit_card',
+                    transactionId: `seed_txn_${Date.now()}_${i}`
+                });
+            }
+        }
+
         console.log('Courses seeded.');
         process.exit(0);
     } catch (error) {

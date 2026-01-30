@@ -118,7 +118,24 @@ export default function AdminDashboardPage() {
                         <CardTitle>Recent Enrollments</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <p className="text-sm text-muted-foreground">No recent enrollments to show.</p>
+                        {stats?.enrollments?.recent?.length > 0 ? (
+                            <div className="space-y-4">
+                                {stats.enrollments.recent.map((enrollment: any, i: number) => (
+                                    <div key={i} className="flex items-center justify-between border-b pb-2 last:border-0 last:pb-0">
+                                        <div>
+                                            <p className="font-medium text-sm">{enrollment.student?.name}</p>
+                                            <p className="text-xs text-muted-foreground">{enrollment.student?.email}</p>
+                                        </div>
+                                        <div className="text-right">
+                                            <p className="font-medium text-sm">{enrollment.course?.title}</p>
+                                            <p className="text-xs text-green-600">Paid INR {enrollment.course?.price}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-sm text-muted-foreground">No recent enrollments to show.</p>
+                        )}
                     </CardContent>
                 </Card>
             </div>

@@ -27,13 +27,21 @@ const Payment = sequelize.define('Payment', {
         type: DataTypes.STRING,
         defaultValue: 'INR',
     },
-    transactionId: {
+    cfOrderId: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: true, // Cashfree Order ID must be unique
+    },
+    cfPaymentId: {
+        type: DataTypes.STRING,
+        allowNull: true, // Populated after successful payment
+    },
+    paymentSessionId: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     paymentMethod: {
-        type: DataTypes.STRING, // e.g., 'razorpay', 'stripe', 'upi'
+        type: DataTypes.STRING, // e.g., 'razorpay', 'stripe', 'upi', 'cashfree'
         allowNull: true,
     },
     status: {

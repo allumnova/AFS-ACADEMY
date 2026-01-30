@@ -39,9 +39,30 @@ Payment.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
 Lecture.hasMany(Attendance, { foreignKey: 'lectureId', as: 'attendees' });
 Attendance.belongsTo(Lecture, { foreignKey: 'lectureId', as: 'lecture' });
 
+const Quiz = require('./Quiz');
+const QuizResult = require('./QuizResult');
+
+// ... existing imports ...
+
+// Associations
+
+// ... existing associations ...
+
 // User has many Attendances
 User.hasMany(Attendance, { foreignKey: 'userId', as: 'attendanceRecords' });
 Attendance.belongsTo(User, { foreignKey: 'userId', as: 'student' });
+
+// Course has many Quizzes
+Course.hasMany(Quiz, { foreignKey: 'courseId', as: 'quizzes' });
+Quiz.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
+
+// Quiz has many Results
+Quiz.hasMany(QuizResult, { foreignKey: 'quizId', as: 'results' });
+QuizResult.belongsTo(Quiz, { foreignKey: 'quizId', as: 'quiz' });
+
+// User has many QuizResults
+User.hasMany(QuizResult, { foreignKey: 'userId', as: 'quizResults' });
+QuizResult.belongsTo(User, { foreignKey: 'userId', as: 'student' });
 
 module.exports = {
     sequelize,
@@ -54,7 +75,11 @@ module.exports = {
     Media,
     Review,
     Notification,
+    Quiz,
+    QuizResult,
 };
+
+// ... existing Notification/Review associations ...
 
 // Notification Associations
 Notification.belongsTo(User, { foreignKey: 'userId', as: 'user' });

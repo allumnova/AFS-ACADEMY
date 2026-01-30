@@ -1,9 +1,13 @@
-const { Payment, Enrollment } = require('../models');
+const { Payment, Enrollment, Course } = require('../models');
 const sendEmail = require('../utils/emailService');
+const { Cashfree } = require('cashfree-pg');
+
+Cashfree.XClientId = process.env.CASHFREE_APP_ID;
+Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
+Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
 
 exports.getMyPayments = async (req, res) => {
     try {
-        const { Course } = require('../models');
         const payments = await Payment.findAll({
             where: { userId: req.user.id },
             include: [{ model: Course, as: 'course', attributes: ['title'] }],
@@ -18,77 +22,88 @@ exports.getMyPayments = async (req, res) => {
 
 exports.createOrder = async (req, res) => {
     try {
-        const { amount, currency } = req.body;
+        const { courseId } = req.body;
 
-        // Mock Order Creation (e.g., Razorpay/Stripe would return an order_id here)
-        const orderId = `order_${Date.now()}`;
+        const course = await Course.findByPk(courseId);
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
 
-        res.json({
-            id: orderId,
-            currency: currency || 'INR',
-            amount: amount
+        const orderId = `order_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+        const request = {
+            order_amount: parseFloat(course.price),
+            order_currency: 'INR',
+            order_id: orderId,
+            customer_details: {
+                customer_id: req.user.id,
+                customer_name: req.user.name || 'Student',
+                customer_email: req.user.email,
+                customer_phone: '9999999999' // Mandatory for Cashfree, using dummy if not available
+            },
+            order_meta: {
+                return_url: `${process.env.NEXT_PUBLIC_API_URL}/payments/verify?order_id={order_id}`
+            }
+        };
+
+        const response = await Cashfree.PGCreateOrder("2023-08-01", request);
+        const orderData = response.data;
+
+        // Save pending payment record
+        await Payment.create({
+            userId: req.user.id,
+            courseId: course.id,
+            amount: course.price,
+            cfOrderId: orderData.order_id,
+            paymentSessionId: orderData.payment_session_id,
+            status: 'pending'
         });
+
+        res.json(orderData);
+
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Cashfree Create Order Error:', error.response?.data?.message || error.message);
+        res.status(500).json({ message: error.response?.data?.message || 'Payment initiation failed' });
     }
 };
 
 exports.verifyPayment = async (req, res) => {
     try {
-        const { paymentId, orderId, amount, courseId } = req.body;
+        const { orderId } = req.body;
 
-        // Mock verification override
-        const payment = await Payment.create({
-            userId: req.user.id,
-            courseId: courseId || null,
-            amount,
-            transactionId: paymentId || `pay_${Date.now()}`,
-            status: 'completed',
-            paymentMethod: 'mock_gateway'
-        });
-
-        // Create Enrollment if courseId is provided
-        if (courseId) {
-            await Enrollment.create({
-                userId: req.user.id,
-                courseId: courseId,
-                status: 'active'
-            });
+        if (!orderId) {
+            return res.status(400).json({ message: 'Order ID is required' });
         }
 
-        // Send Confirmation Email
-        try {
-            const user = await Payment.findByPk(payment.id, {
-                include: [{ model: require('../models').User, as: 'student', attributes: ['name', 'email'] }]
-            });
+        const response = await Cashfree.PGOrderFetchPayments("2023-08-01", orderId);
+        const payments = response.data;
 
-            await sendEmail({
-                email: req.user.email,
-                subject: 'Payment Successful - AFS Academy',
-                message: `Your payment of ${amount} for the course has been confirmed. Transaction ID: ${payment.transactionId}`,
-                html: `
-                    <div style="font-family: sans-serif; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
-                        <h2 style="color: #10b981;">Payment Confirmed</h2>
-                        <p>Hello ${req.user.name},</p>
-                        <p>We've successfully received your payment for the course.</p>
-                        <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                            <p style="margin: 0; font-size: 14px;"><strong>Transaction ID:</strong> ${payment.transactionId}</p>
-                            <p style="margin: 5px 0 0; font-size: 14px;"><strong>Amount Paid:</strong> ${payment.currency} ${amount}</p>
-                        </div>
-                        <p>You can now access your course from the student dashboard.</p>
-                        <a href="http://localhost:3000/student/courses" style="display: inline-block; background: #4f46e5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold; margin-top: 10px;">Go to Dashboard</a>
-                    </div>
-                `
-            });
-        } catch (mailError) {
-            console.error('Mail Confirmation Error:', mailError);
+        const successfulPayment = payments.find(p => p.payment_status === 'SUCCESS');
+
+        if (successfulPayment) {
+            const paymentRecord = await Payment.findOne({ where: { cfOrderId: orderId } });
+
+            if (paymentRecord) {
+                // Update payment status
+                paymentRecord.status = 'completed';
+                paymentRecord.cfPaymentId = successfulPayment.cf_payment_id;
+                paymentRecord.paymentMethod = successfulPayment.payment_group; // credit_card, upi, etc.
+                await paymentRecord.save();
+
+                // Enroll student
+                await Enrollment.findOrCreate({
+                    where: { userId: paymentRecord.userId, courseId: paymentRecord.courseId },
+                    defaults: { status: 'active' }
+                });
+
+                return res.json({ status: 'success', message: 'Payment verified and enrolled' });
+            }
         }
 
-        res.json({ message: 'Payment verified and enrollment created', payment });
+        res.status(400).json({ status: 'failed', message: 'Payment verification failed' });
+
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Cashfree Verify Error:', error.response?.data?.message || error.message);
+        res.status(500).json({ message: 'Verification failed' });
     }
 };
 

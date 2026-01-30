@@ -36,6 +36,7 @@ app.use('/api/reviews', require('./routes/reviewRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/quizzes', require('./routes/quizRoutes'));
 
 // Database Connection and Server Start
 const startServer = async () => {

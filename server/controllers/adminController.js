@@ -12,6 +12,16 @@ exports.getDashboardStats = async (req, res) => {
         const payments = await Payment.findAll();
         const totalRevenue = payments.reduce((acc, curr) => acc + parseFloat(curr.amount), 0);
 
+        // Recent Enrollments (Last 5)
+        const recentEnrollments = await Enrollment.findAll({
+            limit: 5,
+            order: [['createdAt', 'DESC']],
+            include: [
+                { model: User, as: 'student', attributes: ['name', 'email'] },
+                { model: Course, as: 'course', attributes: ['title', 'price'] }
+            ]
+        });
+
         res.json({
             users: {
                 total: totalUsers,
@@ -22,7 +32,8 @@ exports.getDashboardStats = async (req, res) => {
                 total: totalCourses
             },
             enrollments: {
-                total: totalEnrollments
+                total: totalEnrollments,
+                recent: recentEnrollments
             },
             revenue: {
                 total: totalRevenue,
