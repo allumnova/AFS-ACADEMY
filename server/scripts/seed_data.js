@@ -111,7 +111,9 @@ async function seedDatabase() {
                     amount: course.price,
                     status: 'completed',
                     paymentMethod: 'credit_card',
-                    transactionId: `seed_txn_${Date.now()}_${i}`
+                    transactionId: `seed_txn_${Date.now()}_${i}`,
+                    cfOrderId: `seed_order_${Date.now()}_${i}`,
+                    paymentSessionId: `seed_session_${Date.now()}_${i}`
                 });
             }
         }
