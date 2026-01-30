@@ -1,10 +1,12 @@
 const { Payment, Enrollment, Course } = require('../models');
 const sendEmail = require('../utils/emailService');
-const Cashfree = require('cashfree-pg');
+const cfPkg = require('cashfree-pg');
+const Cashfree = cfPkg.Cashfree || cfPkg;
+const Environment = cfPkg.Environment || Cashfree.Environment;
 
 Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
-Cashfree.XEnvironment = Cashfree.Environment.SANDBOX;
+Cashfree.XEnvironment = Environment.SANDBOX;
 
 exports.getMyPayments = async (req, res) => {
     try {
