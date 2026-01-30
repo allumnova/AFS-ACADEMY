@@ -20,6 +20,8 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     // Unwrap params using React.use for Next.js 15+ compatibility
     const { id } = use(params)
 
+    const [thumbnail, setThumbnail] = useState<File | null>(null)
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -63,8 +65,21 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
             const token = localStorage.getItem("token")
             if (!token) throw new Error("Not authenticated")
 
-            await axios.put(`http://localhost:5000/api/courses/${id}`, formData, {
-                headers: { Authorization: `Bearer ${token}` }
+            const data = new FormData()
+            data.append("title", formData.title)
+            data.append("description", formData.description)
+            data.append("price", formData.price)
+            data.append("category", formData.category)
+            data.append("level", formData.level)
+            if (thumbnail) {
+                data.append("thumbnail", thumbnail)
+            }
+
+            await axios.put(`http://localhost:5000/api/courses/${id}`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data"
+                }
             })
 
             router.push("/admin/courses")
@@ -143,6 +158,20 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
                                 <option value="Intermediate">Intermediate</option>
                                 <option value="Advanced">Advanced</option>
                             </select>
+                        </div>
+                        <div className="grid gap-2">
+                            <Label htmlFor="thumbnail">Course Thumbnail</Label>
+                            <Input
+                                id="thumbnail"
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        setThumbnail(e.target.files[0])
+                                    }
+                                }}
+                            />
+                            <p className="text-xs text-muted-foreground">Upload a new image to replace the current thumbnail.</p>
                         </div>
                     </CardContent>
                     <CardFooter className="flex justify-end gap-2">
