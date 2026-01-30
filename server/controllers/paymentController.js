@@ -1,6 +1,6 @@
 const { Payment, Enrollment, Course } = require('../models');
 const sendEmail = require('../utils/emailService');
-const { Cashfree } = require('cashfree-pg');
+const Cashfree = require('cashfree-pg');
 
 Cashfree.XClientId = process.env.CASHFREE_APP_ID;
 Cashfree.XClientSecret = process.env.CASHFREE_SECRET_KEY;
