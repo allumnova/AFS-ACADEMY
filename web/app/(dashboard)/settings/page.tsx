@@ -22,7 +22,7 @@ export default function SettingsPage() {
     const fetchProfile = async () => {
         try {
             const token = localStorage.getItem("token")
-            const response = await axios.get("http://localhost:5000/api/users/profile", {
+            const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setUser(response.data)
@@ -40,7 +40,7 @@ export default function SettingsPage() {
 
         try {
             const token = localStorage.getItem("token")
-            const response = await axios.put("http://localhost:5000/api/users/profile", {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`, {
                 name: user.name,
                 phone: user.phone
             }, {
@@ -69,8 +69,8 @@ export default function SettingsPage() {
 
             {message.text && (
                 <div className={`p-4 rounded-lg flex items-center gap-3 text-sm font-medium ${message.type === 'success'
-                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
-                        : 'bg-red-50 text-red-700 border border-red-100'
+                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                    : 'bg-red-50 text-red-700 border border-red-100'
                     }`}>
                     {message.type === 'success' ? <CheckCircle2 className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
                     {message.text}

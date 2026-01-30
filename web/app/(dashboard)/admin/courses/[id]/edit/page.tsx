@@ -33,7 +33,7 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
     useEffect(() => {
         const fetchCourse = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/courses/${id}`)
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses/${id}`)
                 const course = res.data
                 setFormData({
                     title: course.title,
@@ -75,7 +75,7 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
                 data.append("thumbnail", thumbnail)
             }
 
-            await axios.put(`http://localhost:5000/api/courses/${id}`, data, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/courses/${id}`, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "multipart/form-data"

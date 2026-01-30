@@ -15,7 +15,7 @@ export default function AdminCoursesPage() {
         const fetchCourses = async () => {
             try {
                 // Public endpoint is fine for reading, but restricted actions will need token
-                const res = await axios.get("http://localhost:5000/api/courses")
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses`)
                 setCourses(res.data)
             } catch (error) {
                 console.error("Failed to fetch courses", error)
@@ -38,7 +38,7 @@ export default function AdminCoursesPage() {
                 return;
             }
 
-            await axios.delete(`http://localhost:5000/api/courses/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/courses/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 

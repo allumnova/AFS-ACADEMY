@@ -19,7 +19,7 @@ export default function StudentDashboardPage() {
                 return;
             }
             try {
-                const res = await axios.get("http://localhost:5000/api/courses/my/enrolled", {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses/my/enrolled`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setEnrolledCourses(res.data);

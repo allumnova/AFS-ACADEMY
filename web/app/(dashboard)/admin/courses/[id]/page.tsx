@@ -45,7 +45,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
     const fetchCourse = async () => {
         try {
             const token = localStorage.getItem("token")
-            const res = await axios.get(`http://localhost:5000/api/courses/${id}`, {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setCourse(res.data)
@@ -62,7 +62,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
         setLectureLoading(true)
         try {
             const token = localStorage.getItem("token")
-            await axios.post(`http://localhost:5000/api/lectures`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/lectures`, {
                 ...lectureForm,
                 courseId: id
             }, {
@@ -84,7 +84,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
 
         try {
             const token = localStorage.getItem("token")
-            await axios.delete(`http://localhost:5000/api/lectures/${lectureId}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/lectures/${lectureId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             fetchCourse()
@@ -97,7 +97,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
     const handleGenerateCode = async (lectureId: string) => {
         try {
             const token = localStorage.getItem("token")
-            const res = await axios.post(`http://localhost:5000/api/lectures/${lectureId}/attendance-code`, {}, {
+            const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/lectures/${lectureId}/attendance-code`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             fetchCourse()

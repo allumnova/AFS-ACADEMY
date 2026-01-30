@@ -17,7 +17,7 @@ export default function FacultyCoursesPage() {
                 const token = localStorage.getItem('token');
                 if (!token) return;
 
-                const res = await axios.get("http://localhost:5000/api/courses/my/created", {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses/my/created`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 setCourses(res.data)
@@ -51,7 +51,7 @@ export default function FacultyCoursesPage() {
                             {course.thumbnail ? (
                                 <div className="aspect-video relative overflow-hidden">
                                     <img
-                                        src={`http://localhost:5000${course.thumbnail}`}
+                                        src={`${process.env.NEXT_PUBLIC_API_URL?.replace('/api', '')}${course.thumbnail}`}
                                         alt={course.title}
                                         className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                                     />

@@ -24,7 +24,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
             const token = localStorage.getItem("token");
             if (!token) return;
             try {
-                const res = await axios.get(`http://localhost:5000/api/courses/${id}`, {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/courses/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setCourse(res.data);
@@ -33,7 +33,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
                 }
 
                 // Fetch reviews
-                const reviewRes = await axios.get(`http://localhost:5000/api/reviews/course/${id}`);
+                const reviewRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/reviews/course/${id}`);
                 setReviews(reviewRes.data);
             } catch (err) {
                 console.error("Failed to fetch player data", err);
@@ -49,7 +49,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
         setMarkingAttendance(true);
         try {
             const token = localStorage.getItem("token");
-            await axios.post(`http://localhost:5000/api/lectures/${activeLesson.id}/verify-attendance`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/lectures/${activeLesson.id}/verify-attendance`, {
                 code: attendanceCode
             }, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -66,7 +66,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
     const handleSubmitReview = async () => {
         try {
             const token = localStorage.getItem("token");
-            await axios.post(`http://localhost:5000/api/reviews`, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/reviews`, {
                 courseId: id,
                 rating,
                 comment
@@ -76,7 +76,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
             alert("Review submitted!");
             setComment("");
             // Refresh reviews
-            const reviewRes = await axios.get(`http://localhost:5000/api/reviews/course/${id}`);
+            const reviewRes = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/reviews/course/${id}`);
             setReviews(reviewRes.data);
         } catch (err: any) {
             alert(err.response?.data?.message || "Failed to submit review");

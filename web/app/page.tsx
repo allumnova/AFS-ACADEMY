@@ -7,7 +7,7 @@ import { EnrollButton } from "@/components/enroll-button";
 
 async function getCourses() {
   try {
-    const res = await fetch("http://localhost:5000/api/courses", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`, {
       cache: "no-store",
     });
     if (!res.ok) return [];

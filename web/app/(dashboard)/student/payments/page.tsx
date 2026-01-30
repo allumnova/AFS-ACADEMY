@@ -17,7 +17,7 @@ export default function StudentPaymentsPage() {
                 const token = localStorage.getItem("token")
                 // In a real app, there would be a student-specific payments endpoint
                 // For now, we'll fetch from a generic one if it exists or use admin's stats
-                const res = await axios.get("http://localhost:5000/api/payments", {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/payments`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 setPayments(res.data)
@@ -33,7 +33,7 @@ export default function StudentPaymentsPage() {
     const handleDownloadInvoice = async (paymentId: string) => {
         try {
             const token = localStorage.getItem("token")
-            window.open(`http://localhost:5000/api/payments/${paymentId}/invoice?token=${token}`, '_blank')
+            window.open(`${process.env.NEXT_PUBLIC_API_URL}/payments/${paymentId}/invoice?token=${token}`, '_blank')
         } catch (error) {
             console.error("Failed to download invoice", error)
             alert("Failed to generate invoice")

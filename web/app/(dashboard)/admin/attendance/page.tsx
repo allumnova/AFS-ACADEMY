@@ -16,7 +16,7 @@ export default function AttendanceReportPage() {
             try {
                 const token = localStorage.getItem("token")
                 // Fetch all attendance records (restricted by role in backend)
-                const res = await axios.get("http://localhost:5000/api/attendance", {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/attendance`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 setReports(res.data)

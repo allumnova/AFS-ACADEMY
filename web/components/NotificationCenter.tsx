@@ -41,7 +41,7 @@ export default function NotificationCenter() {
         try {
             const token = localStorage.getItem("token")
             if (!token) return
-            const res = await axios.get("http://localhost:5000/api/notifications", {
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/notifications`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setNotifications(res.data)
@@ -53,7 +53,7 @@ export default function NotificationCenter() {
     const markAsRead = async (id: string) => {
         try {
             const token = localStorage.getItem("token")
-            await axios.put(`http://localhost:5000/api/notifications/${id}/read`, {}, {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/notifications/${id}/read`, {}, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setNotifications(notifications.map(n => n.id === id ? { ...n, isRead: true } : n))
@@ -66,7 +66,7 @@ export default function NotificationCenter() {
         e.stopPropagation()
         try {
             const token = localStorage.getItem("token")
-            await axios.delete(`http://localhost:5000/api/notifications/${id}`, {
+            await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/notifications/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             setNotifications(notifications.filter(n => n.id !== id))

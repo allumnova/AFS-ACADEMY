@@ -29,7 +29,7 @@ export default function MediaGalleryPage() {
     const fetchMedia = async () => {
         setLoading(true)
         try {
-            let url = "http://localhost:5000/api/media?"
+            let url = `${process.env.NEXT_PUBLIC_API_URL}/media?`
             if (filter !== "all") url += `category=${filter}&`
             if (typeFilter !== "all") url += `type=${typeFilter}`
 

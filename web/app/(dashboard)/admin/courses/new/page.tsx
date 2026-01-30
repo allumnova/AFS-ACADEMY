@@ -57,7 +57,7 @@ export default function NewCoursePage() {
                 finalData.append('thumbnail', formData.thumbnail)
             }
 
-            await axios.post("http://localhost:5000/api/courses", finalData, {
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/courses`, finalData, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
