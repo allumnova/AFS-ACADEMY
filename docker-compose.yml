@@ -3,6 +3,7 @@ version: '3.8'
 services:
   db:
     image: mysql:8.0
+    container_name: afs-db
     ports:
       - "3306:3306"
     environment:
@@ -10,29 +11,49 @@ services:
       MYSQL_DATABASE: afs_academy
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - afs-network
     restart: always
 
   server:
-    build: ./server
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: afs-server
     ports:
       - "5000:5000"
     environment:
       - PORT=5000
       - DB_URL=mysql://root:root@db:3306/afs_academy
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_NAME=afs_academy
       - JWT_SECRET=your_secret
     depends_on:
       - db
+    networks:
+      - afs-network
     restart: always
 
   web:
-    build: ./web
+    build: 
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: afs-web
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:5000/api
+      - NEXT_PUBLIC_API_URL=http://72.61.250.54:5000/api
     depends_on:
       - server
+    networks:
+      - afs-network
     restart: always
 
 volumes:
   mysql_data:
+
+networks:
+  afs-network:
+    driver: bridge
