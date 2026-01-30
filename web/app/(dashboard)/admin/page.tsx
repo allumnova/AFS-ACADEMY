@@ -21,7 +21,7 @@ export default function AdminDashboardPage() {
                     return;
                 }
 
-                const res = await axios.get("http://localhost:5000/api/admin/stats", {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/admin/stats`, {
                     headers: { Authorization: `Bearer ${token}` }
                 })
                 setStats(res.data)

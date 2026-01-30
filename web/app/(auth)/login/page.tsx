@@ -30,7 +30,7 @@ export default function LoginPage() {
         const password = target.password.value;
 
         try {
-            const response = await axios.post("http://localhost:5000/api/auth/login", {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                 email,
                 password
             });
@@ -140,7 +140,7 @@ export default function LoginPage() {
                         onClick={async () => {
                             try {
                                 setIsLoading(true);
-                                const response = await axios.post("http://localhost:5000/api/auth/login", {
+                                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                                     email: 'admin@afs.com',
                                     password: 'password123'
                                 });
@@ -159,7 +159,7 @@ export default function LoginPage() {
                         onClick={async () => {
                             try {
                                 setIsLoading(true);
-                                const response = await axios.post("http://localhost:5000/api/auth/login", {
+                                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                                     email: 'faculty@afs.com',
                                     password: 'password123'
                                 });
@@ -178,7 +178,7 @@ export default function LoginPage() {
                         onClick={async () => {
                             try {
                                 setIsLoading(true);
-                                const response = await axios.post("http://localhost:5000/api/auth/login", {
+                                const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
                                     email: 'student@afs.com',
                                     password: 'password123'
                                 });
