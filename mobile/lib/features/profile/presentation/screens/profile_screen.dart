@@ -4,7 +4,7 @@ import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/database/database_helper.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -109,7 +109,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             end: Alignment.bottomRight,
                             colors: [
                               Theme.of(context).primaryColor,
-                              Theme.of(context).primaryColor.withOpacity(0.7),
+                              Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.7),
                             ],
                           ),
                         ),
@@ -151,7 +153,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.2),
+                                color: Colors.white.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Text(

@@ -6,8 +6,7 @@ import '../../../../core/widgets/loading_indicator.dart';
 class CourseDetailScreen extends StatefulWidget {
   final String courseId;
 
-  const CourseDetailScreen({Key? key, required this.courseId})
-      : super(key: key);
+  const CourseDetailScreen({super.key, required this.courseId});
 
   @override
   State<CourseDetailScreen> createState() => _CourseDetailScreenState();
@@ -159,8 +158,11 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                   return Card(
                                     margin: const EdgeInsets.only(bottom: 8),
                                     child: ListTile(
-                                      leading: const CircleAvatar(
-                                        child: Icon(Icons.play_arrow),
+                                      leading: CircleAvatar(
+                                        backgroundColor: Theme.of(context)
+                                            .primaryColor
+                                            .withValues(alpha: 0.1),
+                                        child: const Icon(Icons.play_arrow),
                                       ),
                                       title: Text(lecture['title'] ??
                                           'Lecture ${index + 1}'),

@@ -4,7 +4,7 @@ import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
 class MyCoursesScreen extends StatefulWidget {
-  const MyCoursesScreen({Key? key}) : super(key: key);
+  const MyCoursesScreen({super.key});
 
   @override
   State<MyCoursesScreen> createState() => _MyCoursesScreenState();

@@ -4,7 +4,7 @@ import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
 class CoursesManagementScreen extends StatefulWidget {
-  const CoursesManagementScreen({Key? key}) : super(key: key);
+  const CoursesManagementScreen({super.key});
 
   @override
   State<CoursesManagementScreen> createState() =>
@@ -24,6 +24,7 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
   }
 
   Future<void> _loadCourses() async {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
       _error = null;
@@ -31,24 +32,28 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
 
     try {
       final courses = await _courseService.getAllCourses();
-      setState(() {
-        _courses = courses;
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _courses = courses;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _isLoading = false;
+        });
+      }
     }
   }
 
-  Future<void> _deleteCourse(String courseId, String title) async {
+  Future<void> _deleteCourse(String id) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Delete Course'),
-        content: Text('Are you sure you want to delete "$title"?'),
+        content: const Text('Are you sure you want to delete this course?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
@@ -63,17 +68,21 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
       ),
     );
 
-    if (confirmed == true) {
+    if (confirmed == true && mounted) {
       try {
-        await _courseService.deleteCourse(courseId);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Course deleted successfully')),
-        );
-        _loadCourses();
+        await _courseService.deleteCourse(id);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Course deleted')),
+          );
+          _loadCourses();
+        }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to delete course: $e')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete course: $e')),
+          );
+        }
       }
     }
   }
@@ -82,7 +91,15 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Courses Management'),
+        title: const Text('Manage Courses'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.pushNamed(context, '/course-form');
+            },
+          ),
+        ],
       ),
       body: _isLoading
           ? const LoadingIndicator(message: 'Loading courses...')
@@ -105,13 +122,9 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
                   ),
                 )
               : _courses.isEmpty
-                  ? EmptyState(
-                      icon: Icons.school_outlined,
-                      message: 'No courses found',
-                      actionText: 'Create Course',
-                      onAction: () {
-                        Navigator.pushNamed(context, '/course-form');
-                      },
+                  ? const EmptyState(
+                      icon: Icons.library_books_outlined,
+                      message: 'No courses available',
                     )
                   : RefreshIndicator(
                       onRefresh: _loadCourses,
@@ -123,12 +136,17 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
                           return Card(
                             margin: const EdgeInsets.only(bottom: 12),
                             child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundColor: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.1),
+                              leading: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .primaryColor
+                                      .withValues(alpha: 0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
                                 child: Icon(
-                                  Icons.book,
+                                  Icons.book_outlined,
                                   color: Theme.of(context).primaryColor,
                                 ),
                               ),
@@ -137,87 +155,27 @@ class _CoursesManagementScreenState extends State<CoursesManagementScreen> {
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 4),
-                                  Text(
-                                      '${course['category'] ?? 'Development'} • ${course['level'] ?? 'Beginner'}'),
-                                  Text('Price: INR ${course['price'] ?? 0}'),
-                                ],
+                              subtitle: Text(
+                                '${course['category'] ?? 'Development'} • ${course['level'] ?? 'Beginner'}',
                               ),
-                              isThreeLine: true,
-                              trailing: PopupMenuButton(
-                                itemBuilder: (context) => [
-                                  const PopupMenuItem(
-                                    value: 'view',
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.visibility, size: 20),
-                                        SizedBox(width: 8),
-                                        Text('View'),
-                                      ],
-                                    ),
-                                  ),
-                                  const PopupMenuItem(
-                                    value: 'edit',
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.edit, size: 20),
-                                        SizedBox(width: 8),
-                                        Text('Edit'),
-                                      ],
-                                    ),
-                                  ),
-                                  const PopupMenuItem(
-                                    value: 'delete',
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.delete,
-                                            size: 20, color: Colors.red),
-                                        SizedBox(width: 8),
-                                        Text('Delete',
-                                            style:
-                                                TextStyle(color: Colors.red)),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                                onSelected: (value) {
-                                  switch (value) {
-                                    case 'view':
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/course-detail',
-                                        arguments: course['id'],
-                                      );
-                                      break;
-                                    case 'edit':
-                                      Navigator.pushNamed(
-                                        context,
-                                        '/course-form',
-                                        arguments: course,
-                                      );
-                                      break;
-                                    case 'delete':
-                                      _deleteCourse(course['id'],
-                                          course['title'] ?? 'this course');
-                                      break;
-                                  }
-                                },
+                              trailing: IconButton(
+                                icon: const Icon(Icons.delete_outline,
+                                    color: Colors.red),
+                                onPressed: () =>
+                                    _deleteCourse(course['id'] ?? ''),
                               ),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/course-detail',
+                                  arguments: course['id'],
+                                );
+                              },
                             ),
                           );
                         },
                       ),
                     ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          Navigator.pushNamed(context, '/course-form');
-        },
-        icon: const Icon(Icons.add),
-        label: const Text('New Course'),
-      ),
     );
   }
 }

@@ -16,9 +16,9 @@ class DownloadRepository {
     Function(int, int) onProgress,
   ) async {
     try {
-      final appDir = await getApplicationDocumentsDirectory();
-      final fileName = "\${courseId}_video.mp4";
-      final savePath = "\${appDir.path}/$fileName";
+      final fileName = "${courseId}_video.mp4";
+      final savePath =
+          "${(await getApplicationDocumentsDirectory()).path}/$fileName";
 
       // Insert Initial Record
       await _db.insertDownload({

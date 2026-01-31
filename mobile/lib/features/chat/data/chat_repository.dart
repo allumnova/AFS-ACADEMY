@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatMessage {
   final String id;
@@ -19,7 +19,7 @@ class ChatMessage {
 }
 
 class ChatRepository {
-  IO.Socket? _socket;
+  io.Socket? _socket;
   Timer? _simulatedTimer;
   final _messageController = StreamController<ChatMessage>.broadcast();
 

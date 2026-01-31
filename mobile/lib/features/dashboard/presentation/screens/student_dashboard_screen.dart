@@ -5,7 +5,7 @@ import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
 class StudentDashboardScreen extends StatefulWidget {
-  const StudentDashboardScreen({Key? key}) : super(key: key);
+  const StudentDashboardScreen({super.key});
 
   @override
   State<StudentDashboardScreen> createState() => _StudentDashboardScreenState();
@@ -133,7 +133,9 @@ class _StudentDashboardScreenState extends State<StudentDashboardScreen> {
                               title: 'Courses in Progress',
                               value: '${_activeCourses.length}',
                               iconColor: Theme.of(context).primaryColor,
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
                             ),
                             StatCard(
                               icon: Icons.access_time,

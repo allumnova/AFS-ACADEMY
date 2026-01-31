@@ -9,14 +9,14 @@ class StatCard extends StatelessWidget {
   final Color? backgroundColor;
 
   const StatCard({
-    Key? key,
+    super.key,
     required this.icon,
     required this.title,
     required this.value,
     this.subtitle,
     this.iconColor,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class StatCard extends StatelessWidget {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    backgroundColor!.withOpacity(0.1),
+                    backgroundColor!.withValues(alpha: 0.1),
                     Colors.white,
                   ],
                 )

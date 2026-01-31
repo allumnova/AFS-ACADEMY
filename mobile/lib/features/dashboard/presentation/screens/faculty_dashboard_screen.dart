@@ -4,7 +4,7 @@ import '../../../../core/widgets/stat_card.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
 class FacultyDashboardScreen extends StatefulWidget {
-  const FacultyDashboardScreen({Key? key}) : super(key: key);
+  const FacultyDashboardScreen({super.key});
 
   @override
   State<FacultyDashboardScreen> createState() => _FacultyDashboardScreenState();
@@ -23,6 +23,7 @@ class _FacultyDashboardScreenState extends State<FacultyDashboardScreen> {
   }
 
   Future<void> _loadDashboardData() async {
+    if (!mounted) return;
     setState(() {
       _isLoading = true;
       _error = null;
@@ -30,15 +31,19 @@ class _FacultyDashboardScreenState extends State<FacultyDashboardScreen> {
 
     try {
       final courses = await _courseService.getFacultyCourses();
-      setState(() {
-        _myCourses = courses;
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _myCourses = courses;
+          _isLoading = false;
+        });
+      }
     } catch (e) {
-      setState(() {
-        _error = e.toString();
-        _isLoading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _error = e.toString();
+          _isLoading = false;
+        });
+      }
     }
   }
 
@@ -113,7 +118,9 @@ class _FacultyDashboardScreenState extends State<FacultyDashboardScreen> {
                               value: '${_myCourses.length}',
                               subtitle: 'Active courses',
                               iconColor: Theme.of(context).primaryColor,
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: Theme.of(context)
+                                  .primaryColor
+                                  .withValues(alpha: 0.1),
                             ),
                             StatCard(
                               icon: Icons.people_outline,
@@ -191,7 +198,7 @@ class _FacultyDashboardScreenState extends State<FacultyDashboardScreen> {
                                   leading: CircleAvatar(
                                     backgroundColor: Theme.of(context)
                                         .primaryColor
-                                        .withOpacity(0.1),
+                                        .withValues(alpha: 0.1),
                                     child: Icon(
                                       Icons.book,
                                       color: Theme.of(context).primaryColor,

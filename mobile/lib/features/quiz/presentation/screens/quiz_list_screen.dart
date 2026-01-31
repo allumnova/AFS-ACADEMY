@@ -6,7 +6,7 @@ import '../../../../core/widgets/loading_indicator.dart';
 class QuizListScreen extends StatefulWidget {
   final String courseId;
 
-  const QuizListScreen({Key? key, required this.courseId}) : super(key: key);
+  const QuizListScreen({super.key, required this.courseId});
 
   @override
   State<QuizListScreen> createState() => _QuizListScreenState();

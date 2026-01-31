@@ -4,7 +4,7 @@ import '../../../../core/widgets/empty_state.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
-  const PaymentHistoryScreen({Key? key}) : super(key: key);
+  const PaymentHistoryScreen({super.key});
 
   @override
   State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
@@ -130,7 +130,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                         ),
                                         decoration: BoxDecoration(
                                           color: _getStatusColor(status)
-                                              .withOpacity(0.1),
+                                              .withValues(alpha: 0.1),
                                           borderRadius:
                                               BorderRadius.circular(12),
                                         ),
@@ -216,7 +216,8 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                                 await _paymentService
                                                     .generateInvoice(
                                                         payment['id']);
-                                            if (invoiceUrl.isNotEmpty) {
+                                            if (invoiceUrl.isNotEmpty &&
+                                                context.mounted) {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(
                                                 const SnackBar(
@@ -226,12 +227,14 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
                                               // TODO: Open invoice URL in browser or download
                                             }
                                           } catch (e) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'Failed to generate invoice: $e')),
-                                            );
+                                            if (context.mounted) {
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content: Text(
+                                                        'Failed to generate invoice: $e')),
+                                              );
+                                            }
                                           }
                                         },
                                         icon: const Icon(Icons.download,

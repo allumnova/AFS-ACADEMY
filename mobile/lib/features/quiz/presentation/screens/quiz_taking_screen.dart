@@ -6,7 +6,7 @@ import '../../../../core/widgets/loading_indicator.dart';
 class QuizTakingScreen extends StatefulWidget {
   final String quizId;
 
-  const QuizTakingScreen({Key? key, required this.quizId}) : super(key: key);
+  const QuizTakingScreen({super.key, required this.quizId});
 
   @override
   State<QuizTakingScreen> createState() => _QuizTakingScreenState();
@@ -15,7 +15,7 @@ class QuizTakingScreen extends StatefulWidget {
 class _QuizTakingScreenState extends State<QuizTakingScreen> {
   final QuizService _quizService = QuizService();
   Map<String, dynamic>? _quiz;
-  Map<String, dynamic> _answers = {};
+  final Map<String, dynamic> _answers = {};
   bool _isLoading = true;
   bool _isSubmitting = false;
   String? _error;
@@ -155,8 +155,10 @@ class _QuizTakingScreenState extends State<QuizTakingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
         final shouldPop = await showDialog<bool>(
           context: context,
           builder: (context) => AlertDialog(
@@ -174,7 +176,9 @@ class _QuizTakingScreenState extends State<QuizTakingScreen> {
             ],
           ),
         );
-        return shouldPop ?? false;
+        if (shouldPop == true && context.mounted) {
+          Navigator.of(context).pop();
+        }
       },
       child: Scaffold(
         appBar: AppBar(
@@ -266,7 +270,7 @@ class _QuizTakingScreenState extends State<QuizTakingScreen> {
                                       color: isSelected
                                           ? Theme.of(context)
                                               .primaryColor
-                                              .withOpacity(0.1)
+                                              .withValues(alpha: 0.1)
                                           : null,
                                       child: InkWell(
                                         onTap: () {
