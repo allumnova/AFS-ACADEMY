@@ -1,0 +1,259 @@
+Starting a Gradle Daemon, 1 busy and 1 incompatible and 2 stopped Daemons could not be reused, use --status for details
+> Task :gradle:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle:pluginDescriptors UP-TO-DATE
+> Task :gradle:processResources
+
+> Task :gradle:compileKotlin
+w: file:///C:/flutter/src/flutter/packages/flutter_tools/gradle/src/main/kotlin/DependencyVersionChecker.kt:183:39 'getter for minSdkVersion: AndroidVersion' is deprecated. Will be removed in v9.0
+
+> Task :gradle:compileJava NO-SOURCE
+> Task :gradle:compileGroovy NO-SOURCE
+> Task :gradle:classes
+> Task :gradle:jar
+
+> Configure project :app
+The CopyProcessingSpec.setFileMode(Integer) method has been deprecated. This is scheduled to be removed in Gradle 9.0. Please use the filePermissions(Action) method instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#unix_file_permissions_deprecated
+	at Build_gradle$3.execute(build.gradle.kts:16)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :agora_rtc_engine
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_a0f7r2sv4dw0610out0fx5jf.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_a0f7r2sv4dw0610out0fx5jf.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_a0f7r2sv4dw0610out0fx5jf$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle:28)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_a0f7r2sv4dw0610out0fx5jf.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\build.gradle:25)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :flutter_local_notifications
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:25)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_2dpqle567c2l2ay4dr6usprqm.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:24)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('compileSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:26)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_2dpqle567c2l2ay4dr6usprqm.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:24)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('coreLibraryDesugaringEnabled = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2$_closure5.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:28)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:27)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('multiDexEnabled = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2$_closure6.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:34)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_2dpqle567c2l2ay4dr6usprqm$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_local_notifications-19.5.0\android\build.gradle:33)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :iris_method_channel
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_c2j43pnu91mcjs9eps6wo2xuy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_c2j43pnu91mcjs9eps6wo2xuy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_c2j43pnu91mcjs9eps6wo2xuy$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle:31)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_c2j43pnu91mcjs9eps6wo2xuy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\iris_method_channel-2.2.4\android\build.gradle:28)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :package_info_plus
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_b1odwuet3r4jlr6ifjetnrbn3.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_b1odwuet3r4jlr6ifjetnrbn3.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_b1odwuet3r4jlr6ifjetnrbn3$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:29)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_b1odwuet3r4jlr6ifjetnrbn3.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:28)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('minSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_b1odwuet3r4jlr6ifjetnrbn3$_run_closure2$_closure6.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:42)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_b1odwuet3r4jlr6ifjetnrbn3$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\package_info_plus-9.0.0\android\build.gradle:41)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :permission_handler_android
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2bcfkb6af1mrv1u3sfz28jvsy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2bcfkb6af1mrv1u3sfz28jvsy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_2bcfkb6af1mrv1u3sfz28jvsy$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle:27)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_2bcfkb6af1mrv1u3sfz28jvsy.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\permission_handler_android-13.0.1\android\build.gradle:24)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :shared_preferences_android
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ajpphg9cywbujqgtslm7y1z5x.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ajpphg9cywbujqgtslm7y1z5x.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ajpphg9cywbujqgtslm7y1z5x$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:36)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ajpphg9cywbujqgtslm7y1z5x.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:35)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('checkAllWarnings = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ajpphg9cywbujqgtslm7y1z5x$_run_closure3$_closure11.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:57)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ajpphg9cywbujqgtslm7y1z5x$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:56)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('warningsAsErrors = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_ajpphg9cywbujqgtslm7y1z5x$_run_closure3$_closure11.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:58)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_ajpphg9cywbujqgtslm7y1z5x$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\shared_preferences_android-2.4.13\android\build.gradle:56)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :sqflite_android
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_8ip3j9i7s1bo95x5u9soxxrtx.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_8ip3j9i7s1bo95x5u9soxxrtx.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_8ip3j9i7s1bo95x5u9soxxrtx$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:35)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_8ip3j9i7s1bo95x5u9soxxrtx.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:32)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('compileSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_8ip3j9i7s1bo95x5u9soxxrtx$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:37)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_8ip3j9i7s1bo95x5u9soxxrtx.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:32)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('minSdk = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_8ip3j9i7s1bo95x5u9soxxrtx$_run_closure3$_closure9.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:45)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_8ip3j9i7s1bo95x5u9soxxrtx$_run_closure3.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\sqflite_android-2.4.1\android\build.gradle:44)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Configure project :wakelock_plus
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle': line 1
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('group = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_49rynlijr12ghcos0bjupyfde.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle:1)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Build file 'C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle': line 2
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('version = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_49rynlijr12ghcos0bjupyfde.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle:2)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+Space-assignment syntax in Groovy DSL has been deprecated. This is scheduled to be removed in Gradle 10.0. Use assignment ('namespace = <value>') instead. Consult the upgrading guide for further information: https://docs.gradle.org/8.12/userguide/upgrading_version_8.html#groovy_space_assignment_syntax
+	at build_49rynlijr12ghcos0bjupyfde$_run_closure2.doCall$original(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle:27)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+	at build_49rynlijr12ghcos0bjupyfde.run(C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\wakelock_plus-1.4.0\android\build.gradle:26)
+	(Run with --stacktrace to get the full stack trace of this deprecation warning.)
+
+> Task :agora_rtc_engine:preBuild UP-TO-DATE
+> Task :agora_rtc_engine:preReleaseBuild UP-TO-DATE
+> Task :agora_rtc_engine:configureCMakeRelWithDebInfo[arm64-v8a]
+
+> Task :agora_rtc_engine:buildCMakeRelWithDebInfo[arm64-v8a] FAILED
+C/C++: ninja: Entering directory `C:\Users\Vipranshu Sachan\AppData\Local\Pub\Cache\hosted\pub.dev\agora_rtc_engine-6.5.3\android\.cxx\RelWithDebInfo\6w468433\arm64-v8a'
+C/C++: ld.lld: error: undefined symbol: operator new(unsigned long)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:844 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:844)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(Java_io_agora_agora_1rtc_1ng_IrisRenderer_nativeStartRenderingToSurface)
+C/C++: >>> referenced by new:271 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/new:271)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::NativeTextureRenderer::OnVideoFrameReceived(void const*, IrisRtcVideoFrameConfig const&, bool))
+C/C++: >>> referenced by unique_ptr.h:601 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/unique_ptr.h:601)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(std::__ndk1::__unique_if<agora::iris::rendering::Texture2DRendering>::__unique_single std::__ndk1::make_unique[abi:ne180000]<agora::iris::rendering::Texture2DRendering, std::__ndk1::shared_ptr<agora::iris::rendering::GLContext>&>(std::__ndk1::shared_ptr<agora::iris::rendering::GLContext>&))
+C/C++: >>> referenced 5 more times
+C/C++: ld.lld: error: undefined symbol: operator delete(void*)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:844 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:844)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(Java_io_agora_agora_1rtc_1ng_IrisRenderer_nativeStartRenderingToSurface)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:857 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:857)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(Java_io_agora_agora_1rtc_1ng_IrisRenderer_nativeStopRenderingToSurface)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:725 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:725)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::NativeTextureRenderer::~NativeTextureRenderer())
+C/C++: >>> referenced 24 more times
+C/C++: ld.lld: error: undefined symbol: std::__ndk1::__shared_weak_count::__release_weak()
+C/C++: >>> referenced by shared_ptr.h:184 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:184)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(Java_io_agora_agora_1rtc_1ng_IrisRenderer_nativeStopRenderingToSurface)
+C/C++: >>> referenced by shared_ptr.h:184 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:184)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::NativeTextureRenderer::Dispose())
+C/C++: >>> referenced by shared_ptr.h:184 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:184)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::NativeTextureRenderer::~NativeTextureRenderer())
+C/C++: >>> referenced 8 more times
+C/C++: ld.lld: error: undefined symbol: __cxa_begin_catch
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(__clang_call_terminate)
+C/C++: ld.lld: error: undefined symbol: std::terminate()
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(__clang_call_terminate)
+C/C++: ld.lld: error: undefined symbol: std::__ndk1::__shared_weak_count::~__shared_weak_count()
+C/C++: >>> referenced by shared_ptr.h:246 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:246)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(std::__ndk1::__shared_ptr_emplace<agora::iris::rendering::GLContext, std::__ndk1::allocator<agora::iris::rendering::GLContext>>::~__shared_ptr_emplace())
+C/C++: >>> referenced by shared_ptr.h:246 (C:/Users/Vipranshu Sachan/AppData/Local/Android/Sdk/ndk/27.0.12077973/toolchains/llvm/prebuilt/windows-x86_64/sysroot/usr/include/c++/v1/__memory/shared_ptr.h:246)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(std::__ndk1::__shared_ptr_emplace<agora::iris::rendering::GLContext, std::__ndk1::allocator<agora::iris::rendering::GLContext>>::~__shared_ptr_emplace())
+C/C++: ld.lld: error: undefined symbol: operator new[](unsigned long)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:218 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:218)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::ScopedShader::initShader(char const*, int))
+C/C++: ld.lld: error: undefined symbol: operator delete[](void*)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc:223 (C:/Users/Vipranshu Sachan/AppData/Local/Pub/Cache/hosted/pub.dev/agora_rtc_engine-6.5.3/android/src/main/cpp/iris_rtc_rendering_android.cc:223)
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(agora::iris::rendering::ScopedShader::initShader(char const*, int))
+C/C++: ld.lld: error: undefined symbol: vtable for __cxxabiv1::__class_type_info
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for agora::iris::VideoFrameObserverDelegate)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for agora::iris::rendering::RenderingOp)
+C/C++: >>> the vtable symbol may be undefined because the class is missing its key function (see https://lld.llvm.org/missingkeyfunction)
+C/C++: ld.lld: error: undefined symbol: vtable for __cxxabiv1::__si_class_type_info
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for agora::iris::rendering::NativeTextureRenderer)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for std::__ndk1::__shared_ptr_emplace<agora::iris::rendering::GLContext, std::__ndk1::allocator<agora::iris::rendering::GLContext>>)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for agora::iris::rendering::Texture2DRendering)
+C/C++: >>> referenced 2 more times
+C/C++: >>> the vtable symbol may be undefined because the class is missing its key function (see https://lld.llvm.org/missingkeyfunction)
+C/C++: ld.lld: error: undefined symbol: std::__ndk1::__shared_weak_count::__get_deleter(std::type_info const&) const
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(vtable for std::__ndk1::__shared_ptr_emplace<agora::iris::rendering::GLContext, std::__ndk1::allocator<agora::iris::rendering::GLContext>>)
+C/C++: ld.lld: error: undefined symbol: typeinfo for std::__ndk1::__shared_weak_count
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(typeinfo for std::__ndk1::__shared_ptr_emplace<agora::iris::rendering::GLContext, std::__ndk1::allocator<agora::iris::rendering::GLContext>>)
+C/C++: ld.lld: error: undefined symbol: __cxa_pure_virtual
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(vtable for agora::iris::rendering::RenderingOp)
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(vtable for agora::iris::rendering::RenderingOp)
+C/C++: ld.lld: error: undefined symbol: __gxx_personality_v0
+C/C++: >>> referenced by iris_rtc_rendering_android.cc
+C/C++: >>>               CMakeFiles/iris_rendering_android.dir/iris_rtc_rendering_android.cc.o:(DW.ref.__gxx_personality_v0)
+C/C++: CLANG_~1: error: linker command failed with exit code 1 (use -v to see invocation)
+C/C++: ninja: build stopped: subcommand failed.
+
+[Incubating] Problems report is available at: file:///C:/my_projects/AFS%20ACADEMY/mobile/build/reports/problems/problems-report.html
+6 actionable tasks: 5 executed, 1 up-to-date

@@ -3,6 +3,20 @@ allprojects {
         google()
         mavenCentral()
     }
+
+    afterEvaluate {
+        if (project.extensions.findByName("android") != null) {
+            val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
+            android.ndkVersion = "26.3.11579264"
+            android.defaultConfig {
+                externalNativeBuild {
+                    cmake {
+                        arguments("-DANDROID_STL=c++_shared")
+                    }
+                }
+            }
+        }
+    }
 }
 
 val newBuildDir: Directory = rootProject.layout.buildDirectory.dir("../../build").get()
