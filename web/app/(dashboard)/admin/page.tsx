@@ -128,7 +128,7 @@ export default function AdminDashboardPage() {
                                         </div>
                                         <div className="text-right">
                                             <p className="font-medium text-sm">{enrollment.course?.title}</p>
-                                            <p className="text-xs text-green-600">Paid INR {enrollment.course?.price}</p>
+                                            <p className="text-xs text-green-600 font-bold tracking-tight">Paid ₹{enrollment.course?.price}</p>
                                         </div>
                                     </div>
                                 ))}

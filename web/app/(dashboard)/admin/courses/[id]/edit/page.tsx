@@ -127,8 +127,8 @@ export default function EditCoursePage({ params }: { params: Promise<{ id: strin
                         </div>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="grid gap-2">
-                                <Label htmlFor="price">Price ($)</Label>
-                                <Input id="price" type="number" min="0" step="0.01" placeholder="99.99" value={formData.price} onChange={handleChange} required />
+                                <Label htmlFor="price">Price (₹)</Label>
+                                <Input id="price" type="number" min="0" step="1" placeholder="999" value={formData.price} onChange={handleChange} required />
                             </div>
                             <div className="grid gap-2">
                                 <Label htmlFor="category">Category</Label>

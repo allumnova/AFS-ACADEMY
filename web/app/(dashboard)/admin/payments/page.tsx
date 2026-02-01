@@ -5,9 +5,9 @@ import { Badge } from "@/components/ui/badge"
 
 export default function AdminPaymentsPage() {
     const transactions = [
-        { id: "TXN001", user: "Alice Johnson", amount: "$49.99", status: "completed", date: "2024-02-10" },
-        { id: "TXN002", user: "Bob Smith", amount: "$199.00", status: "completed", date: "2024-02-09" },
-        { id: "TXN003", user: "Charlie Brown", amount: "$49.99", status: "failed", date: "2024-02-08" },
+        { id: "TXN001", user: "Alice Johnson", amount: "₹49.99", status: "completed", date: "2024-02-10" },
+        { id: "TXN002", user: "Bob Smith", amount: "₹199.00", status: "completed", date: "2024-02-09" },
+        { id: "TXN003", user: "Charlie Brown", amount: "₹49.99", status: "failed", date: "2024-02-08" },
     ]
 
     return (
@@ -20,7 +20,7 @@ export default function AdminPaymentsPage() {
                         <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$12,450.00</div>
+                        <div className="text-2xl font-bold">₹12,450.00</div>
                         <p className="text-xs text-muted-foreground">+12% from last month</p>
                     </CardContent>
                 </Card>
@@ -29,7 +29,7 @@ export default function AdminPaymentsPage() {
                         <CardTitle className="text-sm font-medium">Pending Payouts</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$1,200.00</div>
+                        <div className="text-2xl font-bold">₹1,200.00</div>
                     </CardContent>
                 </Card>
                 <Card>
@@ -37,7 +37,7 @@ export default function AdminPaymentsPage() {
                         <CardTitle className="text-sm font-medium">Refunds</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$149.97</div>
+                        <div className="text-2xl font-bold">₹149.97</div>
                     </CardContent>
                 </Card>
             </div>

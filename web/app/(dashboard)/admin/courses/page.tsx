@@ -71,7 +71,7 @@ export default function AdminCoursesPage() {
                             <CardTitle className="flex justify-between items-start">
                                 <span className="text-lg line-clamp-1">{course.title}</span>
                                 <span className="text-xs bg-muted px-2 py-1 rounded-full font-normal">
-                                    ${course.price}
+                                    ₹{course.price}
                                 </span>
                             </CardTitle>
                         </CardHeader>

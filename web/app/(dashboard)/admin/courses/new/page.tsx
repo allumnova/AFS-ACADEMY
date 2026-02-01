@@ -138,8 +138,8 @@ export default function NewCoursePage() {
                                 </div>
                             </div>
                             <div className="grid gap-2">
-                                <Label htmlFor="price">Price ($)</Label>
-                                <Input id="price" type="number" placeholder="49.99" value={formData.price} onChange={handleChange} />
+                                <Label htmlFor="price">Price (₹)</Label>
+                                <Input id="price" type="number" placeholder="499" value={formData.price} onChange={handleChange} />
                             </div>
                         </div>
                     )}
