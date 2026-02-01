@@ -58,7 +58,7 @@ export default async function CoursesPage() {
                                 </CardDescription>
                             </CardContent>
                             <CardFooter className="p-6 pt-0 flex items-center justify-between">
-                                <div className="font-bold text-lg">${course.price}</div>
+                                <div className="font-bold text-lg">₹{course.price}</div>
                                 <EnrollButton courseId={course.id} price={course.price} size="sm" className="gap-2" />
                             </CardFooter>
                         </Card>

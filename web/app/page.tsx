@@ -49,14 +49,13 @@ export default async function Home() {
       </header>
 
       <main className="flex-1">
-        {/* Hero Section - High Contrast & Better Layout */}
-        <section className="relative overflow-hidden pt-20 pb-32 lg:pt-40 lg:pb-48 bg-slate-50">
+        {/* Hero Section - Premium Mesh Gradient & Animations */}
+        <section className="relative overflow-hidden pt-24 pb-36 lg:pt-48 lg:pb-56 mesh-gradient">
+          {/* Subtle Overlay for Readability */}
+          <div className="absolute inset-0 bg-white/20 dark:bg-slate-950/40 backdrop-blur-[2px]"></div>
 
-          {/* Grid Background Pattern */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-          <div className="container relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-10">
+          <div className="container relative z-10 grid lg:grid-cols-2 gap-20 items-center">
+            <div className="space-y-10 animate-slide-up">
               <div className="inline-flex items-center rounded-full border border-primary/20 bg-white px-4 py-1.5 text-sm font-semibold text-primary shadow-sm ring-1 ring-primary/10">
                 <span className="flex h-2.5 w-2.5 rounded-full bg-primary mr-2.5 animate-pulse"></span>
                 New Cohort Starting Soon
@@ -113,39 +112,39 @@ export default async function Home() {
                 <div className="absolute bottom-0 left-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl translate-y-1/3 -translate-x-1/4"></div>
 
                 <div className="relative z-10 w-full">
-                  {/* Main Card */}
-                  <div className="bg-white dark:bg-slate-950 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 p-6 space-y-6 transform transition-transform hover:scale-[1.02] duration-500">
+                  {/* Main Card - Enhanced Glassmorphism */}
+                  <div className="glass-card rounded-2xl p-8 space-y-6 transform transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="h-14 w-14 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-primary">
+                        <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">
                           <BookOpen className="h-7 w-7" />
                         </div>
                         <div>
                           <div className="text-lg font-bold text-slate-900 dark:text-white">Web Development</div>
-                          <div className="text-sm text-slate-500">Masterclass</div>
+                          <div className="text-sm text-slate-500 font-medium">Masterclass</div>
                         </div>
                       </div>
-                      <div className="px-3 py-1 bg-green-50 text-green-600 rounded-full text-xs font-bold">Active</div>
+                      <div className="px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-bold ring-1 ring-green-500/20">Active</div>
                     </div>
 
                     <div className="space-y-4 pt-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-slate-500">Course Progress</span>
-                        <span className="font-bold text-slate-900 dark:text-white">78%</span>
+                        <span className="text-slate-500 font-medium">Course Progress</span>
+                        <span className="font-bold text-primary">78%</span>
                       </div>
-                      <div className="h-2.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                        <div className="h-full bg-primary w-[78%] rounded-full"></div>
+                      <div className="h-2.5 w-full bg-slate-200/50 dark:bg-slate-800/50 rounded-full overflow-hidden">
+                        <div className="h-full bg-primary w-[78%] rounded-full shadow-[0_0_10px_rgba(var(--primary),0.3)]"></div>
                       </div>
                     </div>
 
-                    <div className="pt-4 flex items-center justify-between border-t border-slate-50 dark:border-slate-800">
+                    <div className="pt-4 flex items-center justify-between border-t border-slate-200/50 dark:border-slate-800/50">
                       <div className="flex -space-x-2">
                         {[1, 2, 3].map(i => (
-                          <div key={i} className="h-8 w-8 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800"></div>
+                          <div key={i} className="h-9 w-9 rounded-full border-2 border-white dark:border-slate-950 bg-slate-200 dark:bg-slate-800 shadow-sm"></div>
                         ))}
-                        <div className="h-8 w-8 rounded-full border-2 border-white dark:border-slate-950 bg-slate-50 dark:bg-slate-900 flex items-center justify-center text-[10px] font-bold text-slate-500">+12k</div>
+                        <div className="h-9 w-9 rounded-full border-2 border-white dark:border-slate-950 bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary">+12k</div>
                       </div>
-                      <Button size="sm" variant="ghost" className="text-primary hover:bg-primary/5">Continue</Button>
+                      <Button size="sm" variant="ghost" className="text-primary hover:bg-primary/5 font-semibold">Continue</Button>
                     </div>
                   </div>
 
@@ -180,29 +179,29 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.length > 0 ? (
               courses.slice(0, 3).map((course: any) => (
-                <Card key={course.id} className="group overflow-hidden border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all duration-300">
+                <Card key={course.id} className="group overflow-hidden border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 glass-card">
                   <div className="aspect-video bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
                     {/* Gradient Overlay Placeholder */}
-                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 group-hover:scale-105 transition-transform duration-500`} />
+                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent group-hover:scale-110 transition-transform duration-700`} />
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-white/90 dark:bg-slate-900/90 backdrop-blur text-xs font-bold text-slate-900 dark:text-white rounded-full shadow-sm">
+                      <span className="px-4 py-1.5 bg-white/90 dark:bg-slate-900/90 backdrop-blur text-[10px] font-black uppercase tracking-widest text-primary rounded-full shadow-lg">
                         {course.category || "Development"}
                       </span>
                     </div>
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 line-clamp-1 group-hover:text-primary transition-colors">{course.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-2 mb-4">{course.description}</p>
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
-                      <div className="flex items-center gap-2 text-sm text-slate-500">
-                        <Users className="h-4 w-4" />
+                  <CardContent className="p-8">
+                    <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-3 line-clamp-1 group-hover:text-primary transition-colors">{course.title}</h3>
+                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 font-medium">{course.description}</p>
+                    <div className="flex items-center justify-between pt-6 border-t border-slate-100 dark:border-slate-800">
+                      <div className="flex items-center gap-2 text-sm text-slate-500 font-semibold">
+                        <Users className="h-4 w-4 text-primary" />
                         <span>2.5k Students</span>
                       </div>
-                      <div className="font-bold text-lg text-slate-900 dark:text-white">${course.price}</div>
+                      <div className="font-black text-2xl text-primary">₹{course.price}</div>
                     </div>
                   </CardContent>
-                  <CardFooter className="p-6 pt-0">
-                    <EnrollButton courseId={course.id} price={course.price} className="w-full rounded-full" />
+                  <CardFooter className="p-8 pt-0">
+                    <EnrollButton courseId={course.id} price={course.price} className="w-full rounded-full h-12 text-base font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all" />
                   </CardFooter>
                 </Card>
               ))

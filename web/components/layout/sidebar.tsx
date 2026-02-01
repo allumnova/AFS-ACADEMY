@@ -101,49 +101,52 @@ export function Sidebar({ className }: { className?: string }) {
     });
 
     return (
-        <div className={cn("pb-12 h-screen border-r bg-white dark:bg-slate-950", className)}>
-            <div className="space-y-4 py-4">
-                <div className="px-3 py-2">
-                    <div className="flex items-center gap-2 px-4 mb-8 text-primary">
-                        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center shadow-md shadow-primary/20">
-                            <span className="text-white font-bold text-lg">A</span>
+        <div className={cn("pb-12 h-screen border-r bg-white dark:bg-slate-950 flex flex-col shadow-sm", className)}>
+            <div className="space-y-4 py-8 flex-1">
+                <div className="px-4">
+                    <div className="flex items-center gap-3 px-2 mb-10 group cursor-pointer">
+                        <div className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/20 transition-transform group-hover:scale-110 duration-300">
+                            <span className="text-white font-black text-xl">A</span>
                         </div>
-                        <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">To Admin</span>
+                        <div className="flex flex-col">
+                            <span className="font-bold text-lg tracking-tight text-slate-900 dark:text-white leading-none">AFS Academy</span>
+                            <span className="text-[10px] font-bold text-primary uppercase tracking-[0.2em] mt-1">Management</span>
+                        </div>
                     </div>
 
-                    <h2 className="mb-2 px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
-                        {role === 'admin' ? 'Admin Panel' : role === 'faculty' ? 'Faculty Portal' : 'Student Dashboard'}
+                    <h2 className="mb-4 px-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+                        {role === 'admin' ? 'Administration' : role === 'faculty' ? 'Faculty Portal' : 'Student Menu'}
                     </h2>
                     <div className="space-y-1">
                         {filteredItems.map((item) => (
                             <Link key={item.href} href={item.href}>
                                 <div className={cn(
-                                    "flex items-center rounded-md px-3 py-2 text-sm font-medium transition-all duration-200 group relative",
+                                    "flex items-center rounded-xl px-4 py-3 text-sm font-bold transition-all duration-300 group relative mx-2",
                                     pathname === item.href
-                                        ? "bg-primary/5 text-primary"
-                                        : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200"
+                                        ? "bg-primary text-white shadow-lg shadow-primary/20"
+                                        : "text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-slate-200"
                                 )}>
+                                    <item.icon className={cn("mr-3 h-4 w-4 transition-colors", pathname === item.href ? "text-white" : "text-slate-400 group-hover:text-slate-900 dark:group-hover:text-slate-200")} />
+                                    <span className="tracking-tight">{item.title}</span>
                                     {pathname === item.href && (
-                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+                                        <div className="absolute right-3 w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                                     )}
-                                    <item.icon className={cn("mr-3 h-4 w-4", pathname === item.href ? "text-primary" : "text-slate-400 group-hover:text-slate-500")} />
-                                    <span>{item.title}</span>
                                 </div>
                             </Link>
                         ))}
                     </div>
                 </div>
             </div>
-            <div className="mt-auto p-4 border-t">
+            <div className="p-4 bg-slate-50/50 dark:bg-slate-900/50 border-t border-slate-100 dark:border-slate-800">
                 <button
                     onClick={() => {
                         localStorage.removeItem("token");
                         localStorage.removeItem("user");
                         window.location.href = "/login";
                     }}
-                    className="flex items-center w-full rounded-md px-3 py-2 text-sm font-medium text-slate-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                    className="flex items-center w-full rounded-xl px-4 py-3 text-sm font-bold text-slate-500 hover:bg-red-500 hover:text-white transition-all duration-300 group shadow-sm hover:shadow-red-500/20"
                 >
-                    <LogOut className="mr-3 h-4 w-4" />
+                    <LogOut className="mr-3 h-4 w-4 transition-transform group-hover:-translate-x-1" />
                     Sign Out
                 </button>
             </div>
