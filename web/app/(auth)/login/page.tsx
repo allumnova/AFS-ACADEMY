@@ -39,11 +39,13 @@ export default function LoginPage() {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("user", JSON.stringify(response.data.user));
 
-            // Redirect based on role (simple check for now)
+            // Redirect based on role
             if (response.data.user.role === 'admin') {
                 router.push("/admin");
+            } else if (response.data.user.role === 'faculty') {
+                router.push("/faculty");
             } else {
-                router.push("/dashboard"); // Student/Faculty dashboard
+                router.push("/student");
             }
 
         } catch (err: any) {
@@ -165,7 +167,7 @@ export default function LoginPage() {
                                 });
                                 localStorage.setItem("token", response.data.token);
                                 localStorage.setItem("user", JSON.stringify(response.data.user));
-                                router.push("/dashboard");
+                                router.push("/faculty");
                             } catch (e) { setError("Demo Login Failed"); setIsLoading(false); }
                         }}
                     >
@@ -184,7 +186,7 @@ export default function LoginPage() {
                                 });
                                 localStorage.setItem("token", response.data.token);
                                 localStorage.setItem("user", JSON.stringify(response.data.user));
-                                router.push("/dashboard");
+                                router.push("/student");
                             } catch (e) { setError("Demo Login Failed"); setIsLoading(false); }
                         }}
                     >

@@ -1,33 +1,34 @@
+"use client"
+
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+
 export default function StudentDashboardPage() {
+    const router = useRouter()
+
+    useEffect(() => {
+        const userStr = localStorage.getItem("user")
+        if (userStr) {
+            try {
+                const user = JSON.parse(userStr)
+                if (user.role === 'admin') {
+                    router.push("/admin")
+                } else if (user.role === 'faculty') {
+                    router.push("/faculty")
+                } else if (user.role === 'student') {
+                    router.push("/student")
+                }
+            } catch (e) {
+                console.error("Error parsing user", e)
+            }
+        }
+    }, [router])
+
     return (
-        <div className="space-y-8">
-            <h1 className="text-3xl font-bold tracking-tight">My Learning</h1>
-
-            <div className="rounded-lg border border-dashed p-8 text-center animate-in fade-in-50">
-                <div className="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">
-                    <h3 className="mt-4 text-lg font-semibold">No courses enrolled</h3>
-                    <p className="mb-4 mt-2 text-sm text-muted-foreground">
-                        You haven't enrolled in any courses yet. Explore our catalog to get started.
-                    </p>
-                    <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
-                        Browse Courses
-                    </button>
-                </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {/* Placeholder for Course Cards */}
-                {[1, 2, 3].map((i) => (
-                    <div key={i} className="rounded-xl border bg-card text-card-foreground shadow">
-                        <div className="p-6 flex flex-col items-center justify-center h-48 bg-muted/50">
-                            <span className="text-muted-foreground">Course Preview {i}</span>
-                        </div>
-                        <div className="p-6 pt-0 mt-4 space-y-2">
-                            <h3 className="font-semibold leading-none tracking-tight">Introduction to Web Dev</h3>
-                            <p className="text-sm text-muted-foreground">By AFS Faculty</p>
-                        </div>
-                    </div>
-                ))}
+        <div className="flex items-center justify-center min-h-[60vh]">
+            <div className="flex flex-col items-center gap-4">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+                <p className="text-muted-foreground animate-pulse">Redirecting to your dashboard...</p>
             </div>
         </div>
     )
