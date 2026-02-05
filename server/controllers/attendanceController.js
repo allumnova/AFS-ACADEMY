@@ -55,32 +55,27 @@ exports.getAllAttendance = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
     }
-    res.json(attendance);
-} catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Server error' });
-}
-};
 
-exports.autoMarkAttendance = async (req, res) => {
-    try {
-        const { lectureId } = req.body;
-        const userId = req.user.id;
 
-        const lecture = await Lecture.findByPk(lectureId);
-        if (!lecture) return res.status(404).json({ message: 'Lecture not found' });
+    exports.autoMarkAttendance = async (req, res) => {
+        try {
+            const { lectureId } = req.body;
+            const userId = req.user.id;
 
-        if (!lecture.isLive) return res.status(400).json({ message: 'Lecture is not live' });
+            const lecture = await Lecture.findByPk(lectureId);
+            if (!lecture) return res.status(404).json({ message: 'Lecture not found' });
 
-        // Check/Create Attendance
-        const [attendance] = await Attendance.findOrCreate({
-            where: { lectureId, userId },
-            defaults: { status: 'present' }
-        });
+            if (!lecture.isLive) return res.status(400).json({ message: 'Lecture is not live' });
 
-        res.json({ message: 'Auto attendance marked', attendance });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
-    }
-};
+            // Check/Create Attendance
+            const [attendance] = await Attendance.findOrCreate({
+                where: { lectureId, userId },
+                defaults: { status: 'present' }
+            });
+
+            res.json({ message: 'Auto attendance marked', attendance });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Server error' });
+        }
+    };
