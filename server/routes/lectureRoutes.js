@@ -43,4 +43,11 @@ router.post(
     lectureController.verifyAttendanceCode
 );
 
+router.get(
+    '/:id/progress',
+    protect,
+    authorize('student'),
+    lectureController.getLectureProgress
+);
+
 module.exports = router;

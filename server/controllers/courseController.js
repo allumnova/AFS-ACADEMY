@@ -163,3 +163,53 @@ exports.deleteCourse = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.updateProgress = async (req, res) => {
+    try {
+        const { courseId, lectureId, progressSeconds, isCompleted } = req.body;
+        const userId = req.user.id;
+
+        // 1. Update/Create WatchHistory
+        const [watchHistory, created] = await require('../models').WatchHistory.findOrCreate({
+            where: { userId, lectureId },
+            defaults: { progressSeconds, isCompleted }
+        });
+
+        if (!created) {
+            watchHistory.progressSeconds = progressSeconds;
+            if (isCompleted) watchHistory.isCompleted = true;
+            watchHistory.lastWatchedAt = new Date();
+            await watchHistory.save();
+        }
+
+        // 2. Update Enrollment Completion %
+        // Get all lectures for this course
+        const allLectures = await require('../models').Lecture.findAll({ where: { courseId }, attributes: ['id'] });
+        const totalLectures = allLectures.length;
+
+        if (totalLectures > 0) {
+            // Get count of completed lectures for this user in this course
+            const completedCount = await require('../models').WatchHistory.count({
+                where: {
+                    userId,
+                    lectureId: allLectures.map(l => l.id),
+                    isCompleted: true
+                }
+            });
+
+            const percentage = Math.round((completedCount / totalLectures) * 100);
+
+            // Update Enrollment
+            await Enrollment.update(
+                { completionPercentage: percentage, status: percentage === 100 ? 'completed' : 'active' },
+                { where: { userId, courseId } }
+            );
+        }
+
+        res.json({ message: 'Progress updated' });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

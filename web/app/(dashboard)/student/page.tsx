@@ -32,18 +32,18 @@ export default function StudentDashboardPage() {
         fetchDashboardData()
     }, [])
 
-    if (loading) return <div className="p-8">Loading dashboard...</div>
+    if (loading) return <div className="p-8 text-slate-500 animate-pulse">Loading dashboard...</div>
 
     const activeCourses = enrolledCourses.filter(c => c.enrollmentStatus === 'active');
     const completedCourses = enrolledCourses.filter(c => c.enrollmentStatus === 'completed');
 
     return (
-        <div className="space-y-8">
-            <h1 className="text-3xl font-bold tracking-tight">Welcome back!</h1>
+        <div className="space-y-8 animate-fade-in">
+            <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Welcome back!</h1>
 
             {/* Quick Stats */}
             <div className="grid gap-4 md:grid-cols-3">
-                <Card className="border-slate-100 shadow-sm bg-gradient-to-br from-indigo-50 to-white dark:from-slate-900 dark:to-slate-950">
+                <Card className="glass-card border-none hover-card animate-slide-up delay-100">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Courses in Progress</CardTitle>
                         <BookOpen className="h-4 w-4 text-primary" />
@@ -52,7 +52,7 @@ export default function StudentDashboardPage() {
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">{activeCourses.length}</div>
                     </CardContent>
                 </Card>
-                <Card className="border-slate-100 shadow-sm">
+                <Card className="glass-card border-none hover-card animate-slide-up delay-200">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Hours Learned</CardTitle>
                         <Clock className="h-4 w-4 text-slate-400" />
@@ -61,10 +61,10 @@ export default function StudentDashboardPage() {
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">12.5</div>
                     </CardContent>
                 </Card>
-                <Card className="border-slate-100 shadow-sm">
+                <Card className="glass-card border-none hover-card animate-slide-up delay-300">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Certificates Earned</CardTitle>
-                        <Award className="h-4 w-4 text-slate-400" />
+                        <Award className="h-4 w-4 text-fuchsia-500" />
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold text-slate-900 dark:text-white">{completedCourses.length}</div>
@@ -74,37 +74,40 @@ export default function StudentDashboardPage() {
 
             {/* Resume Learning Section */}
             {activeCourses.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-4 animate-slide-up delay-300">
                     <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-semibold tracking-tight">Pick up where you left off</h2>
-                        <Link href="/dashboard/student/courses" className="text-sm text-primary hover:underline">View All My Courses</Link>
+                        <h2 className="text-xl font-semibold tracking-tight text-slate-800 dark:text-slate-200">Pick up where you left off</h2>
+                        <Link href="/dashboard/student/courses" className="text-sm text-primary hover:underline font-medium">View All My Courses</Link>
                     </div>
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-                        {activeCourses.slice(0, 3).map((course) => (
-                            <Card key={course.id} className="group overflow-hidden border-slate-200">
-                                <div className="aspect-video bg-slate-100 dark:bg-slate-800 relative">
-                                    {/* Placeholder for thumbnail */}
-                                    <div className="absolute inset-0 flex items-center justify-center text-slate-400">
-                                        <PlayCircle className="h-10 w-10 opacity-50" />
+                        {activeCourses.slice(0, 3).map((course, idx) => (
+                            <Card key={course.id} className="group overflow-hidden border-none glass-card hover-card" style={{ animationDelay: `${(idx + 4) * 100}ms` }}>
+                                <div className="aspect-video bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+                                    {/* Gradient Overlay for thumbnail placeholder */}
+                                    <div className="absolute inset-0 bg-gradient-to-br from-slate-200 to-slate-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-slate-400 group-hover:scale-105 transition-transform duration-500">
+                                        <PlayCircle className="h-12 w-12 opacity-50 text-primary/50" />
                                     </div>
-                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-200">
+                                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-200/50">
                                         <div className="h-full bg-primary" style={{ width: `${course.completionPercentage || 0}%` }}></div>
                                     </div>
                                 </div>
                                 <CardContent className="p-4">
-                                    <h3 className="font-bold mb-1 line-clamp-1">{course.title}</h3>
-                                    <p className="text-xs text-slate-500 mb-3">{course.completionPercentage}% Complete</p>
-                                    <Button size="sm" className="w-full">Continue Learning</Button>
+                                    <h3 className="font-bold mb-1 line-clamp-1 text-slate-900 dark:text-white">{course.title}</h3>
+                                    <p className="text-xs text-slate-500 mb-3 font-medium">{course.completionPercentage}% Complete</p>
+                                    <Button size="sm" className="w-full bg-primary hover:bg-blue-600 text-white shadow-lg shadow-blue-500/20">Continue Learning</Button>
                                 </CardContent>
                             </Card>
                         ))}
                     </div>
                 </div>
             ) : (
-                <div className="rounded-lg border border-dashed p-8 text-center">
-                    <h3 className="text-lg font-semibold">Start your learning journey</h3>
-                    <p className="text-sm text-muted-foreground mt-2 mb-4">You are not enrolled in any courses yet.</p>
-                    <Button asChild>
+                <div className="glass-card rounded-lg border-2 border-dashed border-slate-200 dark:border-slate-800 p-12 text-center animate-slide-up delay-300">
+                    <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-indigo-50 dark:bg-slate-800 mb-4">
+                        <BookOpen className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Start your learning journey</h3>
+                    <p className="text-sm text-muted-foreground mt-2 mb-6 max-w-sm mx-auto">Access premium courses and start building your future today.</p>
+                    <Button asChild size="lg" className="bg-primary hover:bg-blue-600 shadow-xl shadow-blue-500/20">
                         <Link href="/courses">Browse Courses</Link>
                     </Button>
                 </div>

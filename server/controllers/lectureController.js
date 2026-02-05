@@ -158,3 +158,27 @@ exports.verifyAttendanceCode = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.getLectureProgress = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.user.id;
+
+        const watchHistory = await require('../models').WatchHistory.findOne({
+            where: { userId, lectureId: id }
+        });
+
+        if (!watchHistory) {
+            return res.json({ progressSeconds: 0, isCompleted: false });
+        }
+
+        res.json({
+            progressSeconds: watchHistory.progressSeconds,
+            isCompleted: watchHistory.isCompleted,
+            lastWatchedAt: watchHistory.lastWatchedAt
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};

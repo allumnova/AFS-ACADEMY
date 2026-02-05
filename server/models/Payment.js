@@ -54,6 +54,20 @@ const Payment = sequelize.define('Payment', {
     }
 }, {
     timestamps: true,
+    indexes: [
+        {
+            fields: ['userId']
+        },
+        {
+            fields: ['courseId']
+        },
+        {
+            fields: ['status']
+        },
+        {
+            fields: ['cfOrderId']
+        }
+    ]
 });
 
 module.exports = Payment;

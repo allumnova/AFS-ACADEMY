@@ -27,4 +27,11 @@ router.get(
     attendanceController.getLectureAttendance
 );
 
+router.post(
+    '/auto',
+    protect,
+    authorize('student'),
+    attendanceController.autoMarkAttendance
+);
+
 module.exports = router;

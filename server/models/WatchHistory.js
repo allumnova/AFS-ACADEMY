@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-const Enrollment = sequelize.define('Enrollment', {
+const WatchHistory = sequelize.define('WatchHistory', {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
@@ -15,39 +15,35 @@ const Enrollment = sequelize.define('Enrollment', {
             key: 'id'
         }
     },
-    courseId: {
+    lectureId: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'Courses',
+            model: 'Lectures',
             key: 'id'
         }
     },
-    status: {
-        type: DataTypes.ENUM('active', 'completed', 'expired', 'dropped'),
-        defaultValue: 'active',
-    },
-    completionPercentage: {
+    progressSeconds: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+        allowNull: false,
+    },
+    isCompleted: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
+    lastWatchedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
     }
 }, {
     timestamps: true,
     indexes: [
         {
-            fields: ['userId']
-        },
-        {
-            fields: ['courseId']
-        },
-        {
-            fields: ['status']
-        },
-        {
             unique: true,
-            fields: ['userId', 'courseId'] // Prevent double enrollment
+            fields: ['userId', 'lectureId']
         }
     ]
 });
 
-module.exports = Enrollment;
+module.exports = WatchHistory;

@@ -1,11 +1,15 @@
 "use client"
 
-import { useEffect, useState, use } from "react"
+// ... imports
+import { useEffect, useState, use, useRef } from "react"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { PlayCircle, CheckCircle, Lock, Menu, MonitorPlay } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import dynamic from "next/dynamic"
+
+const JitsiMeet = dynamic(() => import("@/components/jitsi-meet"), { ssr: false })
 
 export default function CoursePlayerPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
@@ -18,6 +22,11 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
     const [reviews, setReviews] = useState<any[]>([])
     const [rating, setRating] = useState(5)
     const [comment, setComment] = useState("")
+
+    // Video Player State
+    const [isPlaying, setIsPlaying] = useState(false)
+    const videoRef = useRef<HTMLVideoElement>(null)
+    const progressRef = useRef(0) // Keep track of latest progress to send
 
     useEffect(() => {
         const fetchCourse = async () => {
@@ -43,6 +52,90 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
         }
         fetchCourse()
     }, [id])
+
+    // Fetch Progress when activeLesson changes
+    useEffect(() => {
+        if (!activeLesson || activeLesson.isLive) return;
+
+        const fetchProgress = async () => {
+            const token = localStorage.getItem("token");
+            try {
+                const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/lectures/${activeLesson.id}/progress`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                if (res.data.progressSeconds > 0) {
+                    // If player is already open, seek. If not, wait for start.
+                    if (videoRef.current) {
+                        videoRef.current.currentTime = res.data.progressSeconds;
+                    }
+                    progressRef.current = res.data.progressSeconds;
+                }
+            } catch (error) {
+                console.error("Failed to fetch progress", error);
+            }
+        };
+        fetchProgress();
+        setIsPlaying(false); // Reset player state on lesson change
+    }, [activeLesson]);
+
+    // Heartbeat for Progress Tracking
+    useEffect(() => {
+        if (!isPlaying || activeLesson?.isLive) return;
+
+        const interval = setInterval(async () => {
+            if (!videoRef.current) return;
+
+            const currentTime = Math.floor(videoRef.current.currentTime);
+            const token = localStorage.getItem("token");
+
+            // Only update if progressed
+            if (currentTime > progressRef.current) {
+                try {
+                    await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/courses/progress`, {
+                        courseId: id,
+                        lectureId: activeLesson.id,
+                        progressSeconds: currentTime,
+                        isCompleted: false
+                    }, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    progressRef.current = currentTime;
+                } catch (err) {
+                    console.error("Failed to sync progress", err);
+                }
+            }
+        }, 15000); // 15 seconds heartbeat
+
+        return () => clearInterval(interval);
+    }, [isPlaying, activeLesson, id]);
+
+    const handleVideoEnd = async () => {
+        const token = localStorage.getItem("token");
+        try {
+            await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/courses/progress`, {
+                courseId: id,
+                lectureId: activeLesson.id,
+                progressSeconds: Math.floor(videoRef.current?.duration || 0),
+                isCompleted: true
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            alert("Lesson Completed!");
+        } catch (err) {
+            console.error("Failed to mark complete", err);
+        }
+    }
+
+    const handleStartLesson = () => {
+        setIsPlaying(true);
+        // Timeout to allow DOM to update and ref to attach
+        setTimeout(() => {
+            if (videoRef.current && progressRef.current > 0) {
+                videoRef.current.currentTime = progressRef.current;
+                videoRef.current.play();
+            }
+        }, 100);
+    }
 
     const handleMarkAttendance = async () => {
         if (!attendanceCode) return alert("Please enter the attendance code");
@@ -90,12 +183,65 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
         <div className="flex flex-col lg:flex-row h-[calc(100vh-8rem)] gap-4">
             <div className="flex-1 flex flex-col gap-4">
                 <div className="aspect-video bg-black rounded-xl overflow-hidden relative shadow-2xl group">
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
-                        <div className="text-center text-white/80 group-hover:text-white transition-colors">
-                            <PlayCircle className="h-20 w-20 mx-auto mb-4 opacity-75 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 cursor-pointer" />
-                            <p className="font-semibold text-lg tracking-wide">Start {activeLesson?.isLive ? 'Live Session' : 'Lesson'}</p>
+                    {activeLesson?.isLive ? (
+                        <div className="w-full h-[600px] bg-slate-900">
+                            {!isPlaying ? (
+                                <div
+                                    className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center z-10"
+                                    onClick={handleStartLesson}
+                                >
+                                    <div className="text-center text-white/80 group-hover:text-white transition-colors cursor-pointer">
+                                        <MonitorPlay className="h-20 w-20 mx-auto mb-4 opacity-75 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                                        <p className="font-semibold text-lg tracking-wide">Join Live Session</p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <JitsiMeet
+                                    roomName={`AFS_${course.id}_${activeLesson.id}`}
+                                    displayName="Student" // Ideally from User Context
+                                    email="student@example.com"
+                                    onApiReady={(api) => {
+                                        // Auto-mark attendance
+                                        api.addEventListener("videoConferenceJoined", async () => {
+                                            const token = localStorage.getItem("token");
+                                            try {
+                                                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/attendance/auto`,
+                                                    { lectureId: activeLesson.id },
+                                                    { headers: { Authorization: `Bearer ${token}` } }
+                                                );
+                                                console.log("Auto-attendance marked");
+                                            } catch (e) {
+                                                console.error("Auto-attendance failed", e);
+                                            }
+                                        });
+                                    }}
+                                />
+                            )}
                         </div>
-                    </div>
+                    ) : (
+                        isPlaying ? (
+                            <video
+                                ref={videoRef}
+                                src={activeLesson?.videoUrl ? `${process.env.NEXT_PUBLIC_API_URL}${activeLesson.videoUrl}` : ""}
+                                controls
+                                className="w-full h-full object-contain"
+                                onEnded={handleVideoEnd}
+                                autoPlay
+                            />
+                        ) : (
+                            <div
+                                className="absolute inset-0 bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center"
+                                onClick={handleStartLesson}
+                            >
+                                <div className="text-center text-white/80 group-hover:text-white transition-colors cursor-pointer">
+                                    <PlayCircle className="h-20 w-20 mx-auto mb-4 opacity-75 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300" />
+                                    <p className="font-semibold text-lg tracking-wide">
+                                        {progressRef.current > 0 ? 'Resume Lesson' : 'Start Lesson'}
+                                    </p>
+                                </div>
+                            </div>
+                        )
+                    )}
                 </div>
 
                 <Card className="border-slate-200 shadow-sm">
@@ -195,6 +341,7 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
             </div>
 
             <Card className="w-full lg:w-80 border-slate-200">
+// ... rest of file
                 <CardHeader className="border-b bg-slate-50/50 p-4">
                     <CardTitle className="text-sm font-bold flex items-center justify-between">
                         <span>Curriculum</span>

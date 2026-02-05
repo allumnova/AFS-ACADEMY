@@ -45,4 +45,10 @@ router.delete(
     courseController.deleteCourse
 );
 
+router.put(
+    '/progress',
+    protect,
+    courseController.updateProgress
+);
+
 module.exports = router;

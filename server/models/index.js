@@ -64,6 +64,16 @@ QuizResult.belongsTo(Quiz, { foreignKey: 'quizId', as: 'quiz' });
 User.hasMany(QuizResult, { foreignKey: 'userId', as: 'quizResults' });
 QuizResult.belongsTo(User, { foreignKey: 'userId', as: 'student' });
 
+const Certificate = require('./Certificate');
+
+// User has many Certificates
+User.hasMany(Certificate, { foreignKey: 'UserId', as: 'certificates' });
+Certificate.belongsTo(User, { foreignKey: 'UserId', as: 'student' });
+
+// Course has many Certificates
+Course.hasMany(Certificate, { foreignKey: 'CourseId', as: 'certificates' });
+Certificate.belongsTo(Course, { foreignKey: 'CourseId', as: 'course' });
+
 module.exports = {
     sequelize,
     User,
@@ -77,6 +87,7 @@ module.exports = {
     Notification,
     Quiz,
     QuizResult,
+    Certificate,
 };
 
 // ... existing Notification/Review associations ...

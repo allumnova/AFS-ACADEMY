@@ -79,9 +79,9 @@ export default function JitsiMeet({ roomName, displayName, email, onApiReady }: 
         loadJitsiScript()
 
         return () => {
-            // Cleanup if necessary
-            // Note: Jitsi doesn't have a clean unmount method for the external API easily accessible
-            // straightforwardly clearing the container innerHTML might be needed if re-rendering issues occur
+            if (jitsiContainerRef.current) {
+                jitsiContainerRef.current.innerHTML = ""
+            }
         }
     }, [roomName, displayName, email])
 
