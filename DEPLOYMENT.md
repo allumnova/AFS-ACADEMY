@@ -12,7 +12,7 @@ Copy the `scripts/setup_vps.sh` content to your server or pull this repo first.
 If you haven't cloned the repo yet, do this first:
 
 ```bash
-# Install git if missing
+#  Install git if missing
 apt update && apt install git -y
 
 # Clone repository
