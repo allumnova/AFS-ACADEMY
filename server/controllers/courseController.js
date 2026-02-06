@@ -66,13 +66,39 @@ exports.getCourseById = async (req, res) => {
                 { model: User, as: 'instructor', attributes: ['id', 'name'] },
                 { model: require('../models').Lecture, as: 'lectures' }
             ],
+            order: [[{ model: require('../models').Lecture, as: 'lectures' }, 'createdAt', 'ASC']]
         });
 
         if (!course) {
             return res.status(404).json({ message: 'Course not found' });
         }
 
-        res.json(course);
+        let courseData = course.toJSON();
+
+        // If user is logged in, attach progress
+        if (req.user) {
+            const lectureIds = courseData.lectures.map(l => l.id);
+            const history = await require('../models').WatchHistory.findAll({
+                where: {
+                    userId: req.user.id,
+                    lectureId: lectureIds
+                }
+            });
+
+            // Create a map for faster lookup
+            const historyMap = {};
+            history.forEach(h => {
+                historyMap[h.lectureId] = h;
+            });
+
+            courseData.lectures = courseData.lectures.map(lecture => ({
+                ...lecture,
+                isCompleted: historyMap[lecture.id] ? historyMap[lecture.id].isCompleted : false,
+                progressSeconds: historyMap[lecture.id] ? historyMap[lecture.id].progressSeconds : 0
+            }));
+        }
+
+        res.json(courseData);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });

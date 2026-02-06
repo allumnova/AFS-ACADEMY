@@ -388,14 +388,19 @@ class _VideoPlayerScreenState extends ConsumerState<VideoPlayerScreen> {
                           final lecture = course.lectures[index];
                           return ListTile(
                             leading: CircleAvatar(
-                              backgroundColor: Colors.grey.shade100,
-                              child: Text(
-                                "${index + 1}",
-                                style: const TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 12,
-                                ),
-                              ),
+                              backgroundColor: lecture.isCompleted
+                                  ? Colors.green.shade50
+                                  : Colors.grey.shade100,
+                              child: lecture.isCompleted
+                                  ? const Icon(Icons.check,
+                                      color: Colors.green, size: 20)
+                                  : Text(
+                                      "${index + 1}",
+                                      style: const TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                      ),
+                                    ),
                             ),
                             title: Text(
                               lecture.title,

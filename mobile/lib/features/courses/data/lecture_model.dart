@@ -5,6 +5,7 @@ class Lecture {
   final String? videoUrl;
   final bool isLive;
   final DateTime? startTime;
+  final bool isCompleted;
 
   Lecture({
     required this.id,
@@ -13,6 +14,7 @@ class Lecture {
     this.videoUrl,
     required this.isLive,
     this.startTime,
+    this.isCompleted = false,
   });
 
   factory Lecture.fromJson(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class Lecture {
       isLive: json['isLive'] ?? false,
       startTime:
           json['startTime'] != null ? DateTime.parse(json['startTime']) : null,
+      isCompleted: json['isCompleted'] ?? false,
     );
   }
 }
