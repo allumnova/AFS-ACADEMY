@@ -8,6 +8,9 @@ const Attendance = require('./Attendance');
 const Media = require('./Media');
 const Review = require('./Review');
 const Notification = require('./Notification');
+const WatchHistory = require('./WatchHistory');
+const SystemSetting = require('./SystemSetting');
+const AuditLog = require('./AuditLog');
 
 // Associations
 
@@ -67,12 +70,40 @@ QuizResult.belongsTo(User, { foreignKey: 'userId', as: 'student' });
 const Certificate = require('./Certificate');
 
 // User has many Certificates
-User.hasMany(Certificate, { foreignKey: 'UserId', as: 'certificates' });
-Certificate.belongsTo(User, { foreignKey: 'UserId', as: 'student' });
+User.hasMany(Certificate, { foreignKey: 'userId', as: 'certificates' });
+Certificate.belongsTo(User, { foreignKey: 'userId', as: 'student' });
 
 // Course has many Certificates
-Course.hasMany(Certificate, { foreignKey: 'CourseId', as: 'certificates' });
-Certificate.belongsTo(Course, { foreignKey: 'CourseId', as: 'course' });
+Course.hasMany(Certificate, { foreignKey: 'courseId', as: 'certificates' });
+Certificate.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
+
+// WatchHistory Associations
+User.hasMany(WatchHistory, { foreignKey: 'userId', as: 'watchHistory' });
+WatchHistory.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+Lecture.hasMany(WatchHistory, { foreignKey: 'lectureId', as: 'watchHistory' });
+WatchHistory.belongsTo(Lecture, { foreignKey: 'lectureId', as: 'lecture' });
+
+const Batch = require('./Batch');
+const BatchStudent = require('./BatchStudent');
+
+// ... existing associations ...
+
+// Course has many Batches
+Course.hasMany(Batch, { foreignKey: 'courseId', as: 'batches' });
+Batch.belongsTo(Course, { foreignKey: 'courseId', as: 'course' });
+
+// User (Faculty) has many Batches
+User.hasMany(Batch, { foreignKey: 'instructorId', as: 'teachingBatches' });
+Batch.belongsTo(User, { foreignKey: 'instructorId', as: 'instructor' });
+
+// Many-to-Many: Batch and Student (User)
+Batch.belongsToMany(User, { through: BatchStudent, foreignKey: 'batchId', as: 'students' });
+User.belongsToMany(Batch, { through: BatchStudent, foreignKey: 'studentId', as: 'enrolledBatches' });
+
+// AuditLog Associations
+AuditLog.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(AuditLog, { foreignKey: 'userId', as: 'auditLogs' });
 
 module.exports = {
     sequelize,
@@ -88,6 +119,11 @@ module.exports = {
     Quiz,
     QuizResult,
     Certificate,
+    WatchHistory,
+    Batch,
+    BatchStudent,
+    SystemSetting,
+    AuditLog
 };
 
 // ... existing Notification/Review associations ...

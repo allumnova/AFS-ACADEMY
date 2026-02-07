@@ -44,6 +44,8 @@ const QuizResult = sequelize.define('QuizResult', {
         allowNull: true,
     }
 }, {
+    tableName: 'quizresults',
+    freezeTableName: true,
     timestamps: true,
 });
 

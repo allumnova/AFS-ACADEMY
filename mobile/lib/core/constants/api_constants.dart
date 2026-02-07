@@ -1,5 +1,10 @@
+import 'package:flutter/foundation.dart';
+
 class ApiConstants {
   static String get baseUrl {
+    if (kIsWeb) {
+      return 'http://localhost:5000/api'; // Localhost for Web to avoid CORS with prod
+    }
     return 'https://allumnova.cloud/api';
   }
 

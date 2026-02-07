@@ -5,8 +5,9 @@ import { useEffect, useState, use, useRef } from "react"
 import axios from "axios"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { PlayCircle, CheckCircle, Lock, Menu, MonitorPlay } from "lucide-react"
+import { PlayCircle, CheckCircle, Lock, Menu, MonitorPlay, Star } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import dynamic from "next/dynamic"
 
 const JitsiMeet = dynamic(() => import("@/components/jitsi-meet"), { ssr: false })
@@ -290,49 +291,86 @@ export default function CoursePlayerPage({ params }: { params: Promise<{ id: str
                             </div>
 
                             {/* Reviews Section */}
-                            <div className="mt-12">
-                                <h3 className="text-xl font-bold mb-6">Student Feedback</h3>
-                                <div className="grid gap-6">
-                                    <Card className="bg-slate-50/50 border-dashed">
-                                        <CardContent className="p-4 space-y-4">
-                                            <p className="text-sm font-semibold">Write a review</p>
-                                            <div className="flex gap-2">
-                                                {[1, 2, 3, 4, 5].map((star) => (
-                                                    <button
-                                                        key={star}
-                                                        onClick={() => setRating(star)}
-                                                        className={`h-8 w-8 rounded-full flex items-center justify-center transition-colors ${rating >= star ? 'bg-amber-100 text-amber-600' : 'bg-slate-100 text-slate-400'}`}
-                                                    >
-                                                        ★
-                                                    </button>
-                                                ))}
+                            <div className="mt-16 pt-8 border-t border-slate-100">
+                                <div className="flex items-center justify-between mb-8">
+                                    <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                        Student Feedback
+                                        <span className="text-xs font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{reviews.length}</span>
+                                    </h3>
+                                </div>
+
+                                <div className="grid gap-8">
+                                    <Card className="bg-blue-50/30 border-blue-100 border-dashed rounded-2xl overflow-hidden">
+                                        <CardContent className="p-6 space-y-4">
+                                            <div className="flex items-center justify-between">
+                                                <p className="text-sm font-bold text-blue-900">Share your journey</p>
+                                                <div className="flex gap-1.5 p-1 bg-white/50 rounded-full border border-blue-100">
+                                                    {[1, 2, 3, 4, 5].map((star) => (
+                                                        <button
+                                                            key={star}
+                                                            onClick={() => setRating(star)}
+                                                            className={`h-7 w-7 rounded-full flex items-center justify-center transition-all ${rating >= star
+                                                                ? 'bg-amber-400 text-white shadow-sm'
+                                                                : 'text-slate-300 hover:text-amber-200'
+                                                                }`}
+                                                        >
+                                                            <Star className={`h-4 w-4 ${rating >= star ? 'fill-white' : ''}`} />
+                                                        </button>
+                                                    ))}
+                                                </div>
                                             </div>
                                             <textarea
-                                                className="w-full p-3 text-sm border rounded-lg bg-white"
-                                                placeholder="Share your experience with this course..."
+                                                className="w-full p-4 text-sm border-0 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-blue-100 transition-all placeholder:text-slate-400 min-h-[100px]"
+                                                placeholder="What did you think of this session? Your insights help us improve!"
                                                 value={comment}
                                                 onChange={(e) => setComment(e.target.value)}
-                                                rows={3}
                                             />
-                                            <Button size="sm" onClick={handleSubmitReview}>Post Review</Button>
+                                            <div className="flex items-center justify-between">
+                                                <p className="text-[10px] text-blue-600/70 font-medium max-w-[200px]">
+                                                    * Your review will be moderated before appearing publicly.
+                                                </p>
+                                                <Button
+                                                    size="sm"
+                                                    onClick={handleSubmitReview}
+                                                    className="bg-blue-600 hover:bg-blue-700 rounded-lg px-6 shadow-md shadow-blue-500/20"
+                                                >
+                                                    Post Review
+                                                </Button>
+                                            </div>
                                         </CardContent>
                                     </Card>
 
-                                    {reviews.map((review) => (
-                                        <div key={review.id} className="flex gap-4 p-4 rounded-xl border border-slate-100">
-                                            <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center font-bold text-slate-400">
-                                                {review.student?.name?.[0]}
-                                            </div>
-                                            <div className="flex-1">
-                                                <div className="flex justify-between items-start mb-1">
-                                                    <span className="font-bold text-sm">{review.student?.name}</span>
-                                                    <span className="text-amber-500 font-bold text-xs">{'★'.repeat(review.rating)}</span>
+                                    <div className="space-y-4">
+                                        {reviews.map((review) => (
+                                            <div key={review.id} className="flex gap-4 p-5 rounded-2xl border border-slate-50 bg-white shadow-sm hover:shadow-md transition-all group">
+                                                <Avatar className="h-10 w-10 border border-slate-100">
+                                                    <AvatarFallback className="bg-slate-100 text-slate-500 text-xs font-bold">
+                                                        {review.student?.name?.[0].toUpperCase()}
+                                                    </AvatarFallback>
+                                                </Avatar>
+                                                <div className="flex-1">
+                                                    <div className="flex justify-between items-center mb-1">
+                                                        <span className="font-bold text-slate-900 text-sm">{review.student?.name}</span>
+                                                        <div className="flex gap-0.5">
+                                                            {[...Array(5)].map((_, i) => (
+                                                                <Star key={i} className={`h-3 w-3 ${i < review.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-200'}`} />
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    <p className="text-sm text-slate-600 line-height-relaxed">{review.comment}</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-3 flex items-center gap-2">
+                                                        <div className="h-1 w-1 bg-slate-200 rounded-full" />
+                                                        {new Date(review.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                                    </p>
                                                 </div>
-                                                <p className="text-sm text-slate-600">{review.comment}</p>
-                                                <p className="text-[10px] text-slate-400 mt-2">{new Date(review.createdAt).toLocaleDateString()}</p>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                        {reviews.length === 0 && (
+                                            <div className="text-center py-12 text-slate-400 italic text-sm">
+                                                Be the first to share your thoughts on this course!
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>

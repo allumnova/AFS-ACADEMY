@@ -1,5 +1,40 @@
-const { User } = require('../models');
+const { User, Enrollment, Payment, Attendance, Course } = require('../models');
 const sendEmail = require('../utils/emailService');
+
+exports.getStudentStats = async (req, res) => {
+    try {
+        const userId = req.user.id;
+
+        // 1. Pending Payments
+        const pendingPayments = await Payment.count({
+            where: { userId, status: 'pending' }
+        });
+
+        // 2. Attendance Stats
+        const attendance = await Attendance.findAll({
+            where: { userId }
+        });
+
+        const totalSessions = attendance.length;
+        const presentCount = attendance.filter(a => a.status === 'present').length;
+        const attendancePercentage = totalSessions > 0 ? (presentCount / totalSessions * 100).toFixed(1) : "0.0";
+
+        // 3. Active Courses
+        const activeEnrollments = await Enrollment.count({
+            where: { userId, status: 'active' }
+        });
+
+        res.json({
+            pendingPayments,
+            attendancePercentage,
+            activeEnrollments,
+            totalSessions,
+            presentCount
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching stats', error: error.message });
+    }
+};
 
 exports.getProfile = async (req, res) => {
     try {

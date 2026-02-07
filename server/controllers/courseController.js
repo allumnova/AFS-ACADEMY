@@ -11,8 +11,8 @@ exports.createCourse = async (req, res) => {
             title,
             description,
             price,
-            category,
-            level,
+            category: category?.trim(),
+            level: level?.toLowerCase().trim() || 'beginner',
             thumbnail,
             instructorId: req.user.id, // From authMiddleware
         });
@@ -100,8 +100,12 @@ exports.getCourseById = async (req, res) => {
 
         res.json(courseData);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error' });
+        console.error('Course Detail Error:', error);
+        res.status(500).json({
+            message: 'Server error fetching course detail',
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 
@@ -155,8 +159,8 @@ exports.updateCourse = async (req, res) => {
         if (title) course.title = title;
         if (description) course.description = description;
         if (price) course.price = price;
-        if (category) course.category = category;
-        if (level) course.level = level;
+        if (category) course.category = category.trim();
+        if (level) course.level = level.toLowerCase().trim();
         if (req.file) {
             course.thumbnail = `/uploads/${req.file.filename}`;
         }
@@ -237,5 +241,31 @@ exports.updateProgress = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
+    }
+};
+exports.getCourseStudents = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const course = await Course.findByPk(id);
+
+        if (!course) {
+            return res.status(404).json({ message: 'Course not found' });
+        }
+
+        // Check if requester is the instructor or an admin
+        if (course.instructorId !== req.user.id && req.user.role !== 'admin' && req.user.role !== 'super-admin') {
+            return res.status(403).json({ message: 'Not authorized to view students for this course' });
+        }
+
+        const enrollments = await Enrollment.findAll({
+            where: { courseId: id },
+            include: [{ model: User, as: 'student', attributes: ['id', 'name', 'email', 'avatar'] }],
+            order: [['createdAt', 'DESC']]
+        });
+
+        res.json(enrollments);
+    } catch (error) {
+        console.error("GET_COURSE_STUDENTS_ERROR:", error);
+        res.status(500).json({ message: 'Server error fetching course students' });
     }
 };

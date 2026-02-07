@@ -22,6 +22,7 @@ async function seedDatabase() {
                 email: adminEmail,
                 password: password,
                 role: 'admin',
+                isSuperAdmin: true,
                 phone: '9999999999'
             }
         });

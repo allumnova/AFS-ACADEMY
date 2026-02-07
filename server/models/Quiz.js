@@ -37,6 +37,8 @@ const Quiz = sequelize.define('Quiz', {
         defaultValue: 30,
     }
 }, {
+    tableName: 'quizzes',
+    freezeTableName: true,
     timestamps: true,
 });
 

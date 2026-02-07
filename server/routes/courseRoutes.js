@@ -45,6 +45,13 @@ router.delete(
     courseController.deleteCourse
 );
 
+router.get(
+    '/:id/students',
+    protect,
+    authorize('admin', 'faculty'),
+    courseController.getCourseStudents
+);
+
 router.put(
     '/progress',
     protect,

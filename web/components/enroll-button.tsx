@@ -8,7 +8,7 @@ import { ArrowRight, Loader2, Check } from "lucide-react"
 
 interface EnrollButtonProps {
     courseId: number
-    price: number
+    price: string | number
     variant?: "default" | "outline" | "destructive" | "secondary" | "ghost" | "link"
     size?: "default" | "sm" | "lg" | "icon"
     className?: string
@@ -28,11 +28,16 @@ export function EnrollButton({ courseId, price, variant = "default", size = "def
                 return
             }
 
+            // Parse price to number
+            const amount = typeof price === 'string'
+                ? parseFloat(price.replace(/,/g, ''))
+                : price;
+
             // 1. Create Order
             const orderRes = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/payments/orders`,
                 {
                     courseId,
-                    amount: price,
+                    amount,
                     currency: "INR"
                 },
                 { headers: { Authorization: `Bearer ${token}` } }

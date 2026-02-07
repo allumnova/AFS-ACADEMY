@@ -80,22 +80,22 @@ export default function LoginPage() {
         <>
             <div className="animate-slide-up">
                 <div className="flex flex-col space-y-2 text-center mb-8">
-                    <div className="mx-auto h-14 w-14 rounded-2xl bg-primary flex items-center justify-center shadow-xl shadow-primary/20 mb-4 animate-fade-in">
-                        <span className="text-white font-black text-2xl">A</span>
+                    <div className="mx-auto h-12 w-12 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-600/20 mb-4 animate-fade-in">
+                        <span className="text-white font-bold text-xl">A</span>
                     </div>
-                    <h1 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white">
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">
                         Welcome back
                     </h1>
-                    <p className="text-sm text-slate-500 font-medium">
+                    <p className="text-sm text-slate-500">
                         Enter your credentials to access your account
                     </p>
                 </div>
 
-                <div className="glass-card rounded-[2rem] p-8 shadow-2xl border-white/50 animate-fade-in delay-100">
+                <div className="bg-white p-8 animate-fade-in delay-100">
                     <form onSubmit={onSubmit}>
                         <div className="grid gap-5">
                             <div className="grid gap-2">
-                                <Label className="font-bold text-[10px] uppercase tracking-widest text-slate-500 ml-1" htmlFor="email">
+                                <Label className="sr-only" htmlFor="email">
                                     Email Address
                                 </Label>
                                 <Input
@@ -106,79 +106,86 @@ export default function LoginPage() {
                                     autoComplete="email"
                                     autoCorrect="off"
                                     disabled={isLoading}
-                                    className="h-12 bg-white/50 border-slate-200/60 focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all rounded-xl"
+                                    className="h-11 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all rounded-lg"
                                     required
                                 />
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center justify-between">
-                                    <Label className="font-bold text-[10px] uppercase tracking-widest text-slate-500 ml-1" htmlFor="password">
+                                    <Label className="sr-only" htmlFor="password">
                                         Password
                                     </Label>
-                                    <span className="text-xs font-bold text-primary hover:underline cursor-pointer">Forgot?</span>
                                 </div>
                                 <Input
                                     id="password"
-                                    placeholder="••••••••"
+                                    placeholder="Password"
                                     type="password"
                                     autoCapitalize="none"
                                     autoComplete="current-password"
                                     disabled={isLoading}
-                                    className="h-12 bg-white/50 border-slate-200/60 focus:bg-white focus:ring-4 focus:ring-primary/10 transition-all rounded-xl"
+                                    className="h-11 bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus:bg-white focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all rounded-lg"
                                     required
                                 />
+                                <div className="flex justify-end">
+                                    <span className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline cursor-pointer">Forgot password?</span>
+                                </div>
                             </div>
                             {error && (
-                                <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-xs font-bold text-red-600 flex items-center animate-shake">
+                                <div className="p-3 bg-red-50 border border-red-100 rounded-lg text-xs font-medium text-red-600 flex items-center animate-shake">
                                     <ShieldCheck className="w-4 h-4 mr-2" /> {error}
                                 </div>
                             )}
-                            <Button disabled={isLoading} className="h-12 md:h-14 text-base font-bold rounded-xl shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all">
+                            <Button disabled={isLoading} className="h-11 text-sm font-bold rounded-lg shadow-sm bg-blue-600 hover:bg-blue-700 text-white border-0 transition-all">
                                 {isLoading ? (
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 ) : null}
                                 Sign In
                             </Button>
                         </div>
                     </form>
 
-                    <div className="mt-8 text-center text-sm">
-                        <p className="text-slate-500 font-medium">
+                    <div className="mt-6 text-center text-sm">
+                        <p className="text-slate-500">
                             Don&apos;t have an account?{" "}
-                            <Link href="/register" className="font-bold text-primary hover:underline underline-offset-4">
+                            <Link href="/register" className="font-bold text-blue-600 hover:underline underline-offset-4">
                                 Sign Up
                             </Link>
                         </p>
                     </div>
 
                     {/* Demo Login Buttons */}
-                    <div className="mt-10 pt-8 border-t border-slate-200/60">
-                        <p className="text-[10px] text-center text-slate-400 mb-5 font-black uppercase tracking-[0.2em]">
+                    <div className="mt-8 pt-6 border-t border-slate-100">
+                        <p className="text-[10px] text-center text-slate-400 mb-4 font-black uppercase tracking-widest flex items-center justify-center gap-2">
+                            <span className="h-px w-8 bg-slate-100" />
                             Quick Demo Access
+                            <span className="h-px w-8 bg-slate-100" />
                         </p>
                         <div className="grid grid-cols-3 gap-3">
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="h-10 text-[10px] font-black uppercase tracking-wider border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all rounded-lg"
+                                className="h-14 flex flex-col gap-1 text-[10px] font-black border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all rounded-xl shadow-sm group"
                                 onClick={() => loginAs('admin')}
                             >
+                                <ShieldCheck className="h-4 w-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
                                 Admin
                             </Button>
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="h-10 text-[10px] font-black uppercase tracking-wider border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all rounded-lg"
+                                className="h-14 flex flex-col gap-1 text-[10px] font-black border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all rounded-xl shadow-sm group"
                                 onClick={() => loginAs('faculty')}
                             >
+                                <GraduationCap className="h-4 w-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
                                 Faculty
                             </Button>
                             <Button
                                 variant="outline"
                                 size="sm"
-                                className="h-10 text-[10px] font-black uppercase tracking-wider border-slate-200 bg-white hover:bg-slate-50 hover:border-slate-300 transition-all rounded-lg"
+                                className="h-14 flex flex-col gap-1 text-[10px] font-black border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all rounded-xl shadow-sm group"
                                 onClick={() => loginAs('student')}
                             >
+                                <User className="h-4 w-4 text-slate-400 group-hover:text-blue-600 transition-colors" />
                                 Student
                             </Button>
                         </div>

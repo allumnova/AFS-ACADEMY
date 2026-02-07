@@ -1,6 +1,6 @@
 import { Sidebar } from "@/components/layout/sidebar"
 import { MobileSidebar } from "@/components/layout/mobile-sidebar"
-import { LayoutDashboard, UserCircle } from "lucide-react"
+import { UserCircle } from "lucide-react"
 import NotificationCenter from "@/components/NotificationCenter"
 import { Button } from "@/components/ui/button"
 
@@ -10,40 +10,39 @@ export default function DashboardLayout({
     children: React.ReactNode
 }) {
     return (
-        <div className="flex min-h-screen flex-col md:flex-row mesh-gradient">
+        <div className="flex min-h-screen flex-col md:flex-row bg-slate-50 text-slate-900 relative">
+
             {/* Sidebar - Desktop */}
-            <aside className="hidden w-64 md:block fixed inset-y-0 left-0 z-50 transition-all duration-300">
-                <div className="h-full border-r border-white/20 dark:border-slate-800/20 bg-white/40 dark:bg-slate-900/40 backdrop-blur-md">
-                    <Sidebar className="border-none bg-transparent" />
-                </div>
+            <aside className="hidden w-64 md:block fixed inset-y-0 left-0 z-50">
+                <Sidebar className="h-full shadow-sm bg-white border-r border-slate-200" />
             </aside>
 
-            <main className="flex-1 md:pl-64">
+            <main className="flex-1 md:pl-64 flex flex-col min-h-screen">
                 {/* Desktop Header */}
-                <header className="hidden md:flex h-16 border-b border-white/20 dark:border-slate-800/20 items-center justify-between px-8 bg-white/40 dark:bg-slate-900/40 backdrop-blur-sm sticky top-0 z-40">
-                    <h2 className="text-sm font-semibold text-slate-500 uppercase tracking-widest">Dashboard</h2>
+                <header className="hidden md:flex h-16 items-center justify-between px-8 bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+                    <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Dashboard</h2>
                     <div className="flex items-center gap-4">
                         <NotificationCenter />
-                        <div className="h-8 w-[1px] bg-slate-200/50 mx-2" />
-                        <Button variant="ghost" size="sm" className="gap-2 hover:bg-white/20">
+                        <div className="h-6 w-[1px] bg-slate-200 mx-1" />
+                        <Button variant="ghost" size="sm" className="gap-2 text-slate-600 hover:bg-slate-50 hover:text-blue-600 rounded-lg">
                             <UserCircle className="h-5 w-5" />
-                            <span className="text-sm font-medium">My Profile</span>
+                            <span className="text-sm font-semibold">Profile</span>
                         </Button>
                     </div>
                 </header>
 
                 {/* Mobile Header */}
-                <div className="md:hidden h-16 border-b border-white/20 flex items-center justify-between px-4 bg-white/40 backdrop-blur-sm sticky top-0 z-40">
+                <div className="md:hidden h-16 border-b border-slate-200 flex items-center justify-between px-4 bg-white sticky top-0 z-40 shadow-sm">
                     <div className="flex items-center gap-2">
                         <MobileSidebar />
-                        <span className="font-semibold text-lg flex items-center gap-2">
+                        <span className="font-bold text-lg flex items-center gap-2 text-slate-900">
                             AFS Manager
                         </span>
                     </div>
                     <NotificationCenter />
                 </div>
 
-                <div className="p-4 md:p-8 animate-fade-in">
+                <div className="p-6 md:p-8 animate-fade-in flex-1">
                     {children}
                 </div>
             </main>

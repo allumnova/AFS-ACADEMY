@@ -32,6 +32,8 @@ const Notification = sequelize.define('Notification', {
         allowNull: true,
     }
 }, {
+    tableName: 'notifications',
+    freezeTableName: true,
     timestamps: true,
 });
 

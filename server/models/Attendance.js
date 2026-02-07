@@ -32,6 +32,8 @@ const Attendance = sequelize.define('Attendance', {
         defaultValue: DataTypes.NOW,
     }
 }, {
+    tableName: 'attendances',
+    freezeTableName: true,
     timestamps: true,
 });
 

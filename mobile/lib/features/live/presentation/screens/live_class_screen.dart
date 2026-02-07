@@ -110,103 +110,234 @@ class _LiveClassScreenState extends ConsumerState<LiveClassScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color(0xFF0F172A), // Slate 900
       body: Stack(
         children: [
-          Center(child: _renderRemoteVideo()),
+          // Main Video Area
+          Center(
+            child: InteractiveViewer(
+              child: _renderRemoteVideo(),
+            ),
+          ),
+
+          // Header Gradient Overlay
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 120,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.7),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Top App Bar Area
+          Positioned(
+            top: 50,
+            left: 16,
+            right: 16,
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.white24,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.channelName,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Container(
+                            width: 8,
+                            height: 8,
+                            decoration: const BoxDecoration(
+                              color: Colors.redAccent,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          const SizedBox(width: 6),
+                          Text(
+                            "LIVE",
+                            style: TextStyle(
+                              color: Colors.redAccent[100],
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const Icon(Icons.people,
+                              color: Colors.white70, size: 14),
+                          const SizedBox(width: 4),
+                          const Text(
+                            "24", // Mock participant count
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                // Settings or more options could go here
+                IconButton(
+                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+
+          // Local Preview (PiP)
           if (widget.isBroadcaster)
             Positioned(
-              top: 40,
-              right: 20,
+              top: 120,
+              right: 16,
               child: Container(
                 width: 100,
                 height: 150,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.white24, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
-                child: _renderLocalPreview(),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: _renderLocalPreview(),
+                ),
               ),
             ),
 
           // Chat Overlay
           DraggableScrollableSheet(
-            initialChildSize: 0.4,
+            initialChildSize: 0.35,
             minChildSize: 0.1,
             maxChildSize: 0.6,
             builder: (context, scrollController) {
-              return LiveChatOverlay(courseId: widget.channelName);
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors
+                      .transparent, // Let the LiveChatOverlay handle its own background if needed, or transparent here
+                ),
+                child: LiveChatOverlay(courseId: widget.channelName),
+              );
             },
           ),
 
-          // Top Back Button
+          // Bottom Controls Bar
           Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ),
-
-          // Bottom Controls (Float above chat sheet slightly if needed or put inside)
-          // For simplicity, we put them at the very bottom right or top for now to avoid covering chat input
-          Positioned(
-            top: 40,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.red,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text(
-                  "LIVE",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+            bottom: 30, // Above the safe area/nav bar
+            left: 20,
+            right: 20,
+            child: SafeArea(
+              child: Center(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withValues(alpha: 0.6),
+                    borderRadius: BorderRadius.circular(32),
+                    border: Border.all(color: Colors.white12),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _buildControlBtn(
+                        icon: _muted ? Icons.mic_off : Icons.mic,
+                        color: _muted ? Colors.redAccent : Colors.white,
+                        bgColor: _muted ? Colors.white12 : Colors.white24,
+                        onTap: () {
+                          setState(() => _muted = !_muted);
+                          _engine.muteLocalAudioStream(_muted);
+                        },
+                      ),
+                      const SizedBox(width: 20),
+                      _buildControlBtn(
+                        icon: Icons.videocam,
+                        color: Colors.white,
+                        bgColor: Colors.white24,
+                        onTap: () {
+                          // Toggle video logic
+                        },
+                      ),
+                      const SizedBox(width: 20),
+                      if (widget.isBroadcaster)
+                        _buildControlBtn(
+                          icon: Icons.flip_camera_ios,
+                          color: Colors.white,
+                          bgColor: Colors.white24,
+                          onTap: () {
+                            _engine.switchCamera();
+                          },
+                        ),
+                      if (widget.isBroadcaster) const SizedBox(width: 20),
+                      _buildControlBtn(
+                        icon: Icons.call_end,
+                        color: Colors.white,
+                        bgColor: Colors.red,
+                        onTap: () => Navigator.of(context).pop(),
+                        isEndCall: true,
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
           ),
-
-          // Mute/End Controls
-          Positioned(
-            bottom: 20,
-            right: 20,
-            child: Column(
-              children: [
-                if (widget.isBroadcaster)
-                  FloatingActionButton(
-                    heroTag: "mute",
-                    mini: true,
-                    backgroundColor: _muted ? Colors.white : Colors.blueAccent,
-                    child: Icon(
-                      _muted ? Icons.mic_off : Icons.mic,
-                      color: _muted ? Colors.black : Colors.white,
-                    ),
-                    onPressed: () {
-                      setState(() => _muted = !_muted);
-                      _engine.muteLocalAudioStream(_muted);
-                    },
-                  ),
-                const SizedBox(height: 10),
-                FloatingActionButton(
-                  heroTag: "end",
-                  mini: true,
-                  backgroundColor: Colors.red,
-                  child: const Icon(Icons.call_end, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            ),
-          ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildControlBtn({
+    required IconData icon,
+    required Color color,
+    required Color bgColor,
+    required VoidCallback onTap,
+    bool isEndCall = false,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: isEndCall ? 56 : 48,
+        height: isEndCall ? 56 : 48,
+        decoration: BoxDecoration(
+          color: bgColor,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: color, size: isEndCall ? 28 : 24),
       ),
     );
   }
@@ -220,7 +351,15 @@ class _LiveClassScreenState extends ConsumerState<LiveClassScreen> {
         ),
       );
     } else {
-      return const Center(child: CircularProgressIndicator());
+      return Container(
+        color: Colors.black,
+        child: const Center(
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.white30),
+          ),
+        ),
+      );
     }
   }
 
@@ -234,16 +373,21 @@ class _LiveClassScreenState extends ConsumerState<LiveClassScreen> {
         ),
       );
     } else {
-      if (widget.isBroadcaster) {
-        return const Center(
-          child: Text("Broadcasting...", style: TextStyle(color: Colors.white)),
-        );
-      }
-      return const Center(
-        child: Text(
-          "Waiting for Instructor...",
-          style: TextStyle(color: Colors.white),
-        ),
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.live_tv_outlined,
+              size: 64, color: Colors.white.withValues(alpha: 0.3)),
+          const SizedBox(height: 16),
+          if (widget.isBroadcaster)
+            const Text("Starting Broadcast...",
+                style: TextStyle(color: Colors.white70))
+          else
+            const Text(
+              "Waiting for Instructor...",
+              style: TextStyle(color: Colors.white70),
+            ),
+        ],
       );
     }
   }

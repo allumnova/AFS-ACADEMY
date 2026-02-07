@@ -27,6 +27,10 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM('admin', 'faculty', 'student'),
         defaultValue: 'student',
     },
+    isSuperAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+    },
     isVerified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -52,6 +56,8 @@ const User = sequelize.define('User', {
         defaultValue: true,
     }
 }, {
+    tableName: 'users',
+    freezeTableName: true,
     timestamps: true,
     indexes: [
         {

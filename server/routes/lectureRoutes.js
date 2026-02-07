@@ -4,6 +4,8 @@ const lectureController = require('../controllers/lectureController');
 const { protect, authorize } = require('../middleware/authMiddleware');
 const upload = require('../utils/fileUpload');
 
+router.get('/upcoming', protect, lectureController.getUpcomingLectures);
+
 router.get('/course/:courseId', protect, lectureController.getLecturesByCourse);
 
 router.post(

@@ -77,10 +77,17 @@ export default function FacultyCoursesPage() {
                                 <span className="font-medium text-slate-900">${course.price}</span>
                             </div>
                         </CardContent>
-                        <CardFooter className="p-6 pt-0 flex justify-between gap-4">
-                            <Button variant="outline" size="sm" className="w-full" asChild>
+                        <CardFooter className="p-6 pt-0 flex flex-col gap-2">
+                            <Button variant="outline" size="sm" className="w-full justify-start rounded-lg hover:bg-slate-50" asChild>
+                                <Link href={`/faculty/courses/${course.id}/students`}>
+                                    <Users className="h-4 w-4 mr-3 text-blue-600" />
+                                    <span>View Roster</span>
+                                </Link>
+                            </Button>
+                            <Button variant="outline" size="sm" className="w-full justify-start rounded-lg hover:bg-slate-50 border-slate-200" asChild>
                                 <Link href={`/admin/courses/${course.id}/edit`}>
-                                    <Edit className="h-4 w-4 mr-2" /> Edit
+                                    <Edit className="h-4 w-4 mr-3 text-slate-400" />
+                                    <span>Edit Course</span>
                                 </Link>
                             </Button>
                         </CardFooter>

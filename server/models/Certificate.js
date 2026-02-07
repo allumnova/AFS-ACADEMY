@@ -7,11 +7,11 @@ const Certificate = sequelize.define('Certificate', {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
     },
-    UserId: {
-        type: DataTypes.UUID, // Assuming User uses UUID
+    userId: {
+        type: DataTypes.UUID,
         allowNull: false,
     },
-    CourseId: {
+    courseId: {
         type: DataTypes.UUID,
         allowNull: false,
     },
@@ -29,6 +29,8 @@ const Certificate = sequelize.define('Certificate', {
         allowNull: false
     }
 }, {
+    tableName: 'certificates',
+    freezeTableName: true,
     timestamps: true
 });
 

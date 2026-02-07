@@ -29,7 +29,7 @@ const Course = sequelize.define('Course', {
         allowNull: false,
     },
     level: {
-        type: DataTypes.ENUM('beginner', 'intermediate', 'advanced'),
+        type: DataTypes.STRING,
         defaultValue: 'beginner',
     },
     instructorId: { // Foreign key placeholder, relation defined in index.js
@@ -37,6 +37,8 @@ const Course = sequelize.define('Course', {
         allowNull: true,
     }
 }, {
+    tableName: 'courses',
+    freezeTableName: true,
     timestamps: true,
 });
 

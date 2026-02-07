@@ -71,27 +71,29 @@ export default function AdminFacultyPage() {
                             <PlusCircle className="h-4 w-4" /> Add Faculty
                         </Button>
                     </SheetTrigger>
-                    <SheetContent>
-                        <SheetHeader>
-                            <SheetTitle>Add New Faculty</SheetTitle>
-                            <SheetDescription>
-                                Create a new faculty account. They will receive an email to login.
+                    <SheetContent className="bg-white border-l border-slate-200 shadow-2xl">
+                        <SheetHeader className="pb-4 border-b border-slate-100">
+                            <SheetTitle className="text-2xl font-bold text-slate-900">Add New Faculty</SheetTitle>
+                            <SheetDescription className="text-slate-500 font-medium">
+                                Create a new faculty member account. They will receive automated login credentials.
                             </SheetDescription>
                         </SheetHeader>
-                        <form onSubmit={handleCreate} className="space-y-4 mt-4">
-                            <div>
-                                <Label>Name</Label>
-                                <Input value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required />
+                        <form onSubmit={handleCreate} className="space-y-6 mt-8">
+                            <div className="space-y-2">
+                                <Label className="text-slate-700 font-bold">Full Name</Label>
+                                <Input className="bg-slate-50 border-slate-200" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="Dr. John Smith" required />
                             </div>
-                            <div>
-                                <Label>Email</Label>
-                                <Input type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} required />
+                            <div className="space-y-2">
+                                <Label className="text-slate-700 font-bold">Email Address</Label>
+                                <Input className="bg-slate-50 border-slate-200" type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} placeholder="john@afs.com" required />
                             </div>
-                            <div>
-                                <Label>Password</Label>
-                                <Input type="password" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} required />
+                            <div className="space-y-2">
+                                <Label className="text-slate-700 font-bold">Initial Password</Label>
+                                <Input className="bg-slate-50 border-slate-200" type="password" value={formData.password} onChange={e => setFormData({ ...formData, password: e.target.value })} placeholder="••••••••" required />
                             </div>
-                            <Button type="submit" className="w-full">Create Faculty</Button>
+                            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold h-11 rounded-lg shadow-lg shadow-blue-600/20 transition-all">
+                                Create Faculty Profile
+                            </Button>
                         </form>
                     </SheetContent>
                 </Sheet>

@@ -53,6 +53,8 @@ const Payment = sequelize.define('Payment', {
         defaultValue: DataTypes.NOW,
     }
 }, {
+    tableName: 'payments',
+    freezeTableName: true,
     timestamps: true,
     indexes: [
         {

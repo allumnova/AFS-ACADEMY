@@ -146,7 +146,7 @@ exports.generateInvoice = async (req, res) => {
                 <div class="header">
                     <div>
                         <h1>INVOICE</h1>
-                        <p>Invoice #: INV-${payment.transactionId.substring(0, 8).toUpperCase()}</p>
+                        <p>Invoice #: INV-${payment.cfOrderId.substring(0, 8).toUpperCase()}</p>
                         <p>Date: ${new Date(payment.paymentDate).toLocaleDateString()}</p>
                     </div>
                     <div class="company-info">

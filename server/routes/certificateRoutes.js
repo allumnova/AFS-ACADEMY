@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const { Certificate, User, Course, Enrollment } = require('../models');
-const auth = require('../middleware/auth'); // Assuming auth middleware exists
+const { protect } = require('./../middleware/authMiddleware');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 const path = require('path');
 
 // Generate Certificate
-router.post('/generate', auth, async (req, res) => {
+router.post('/generate', protect, async (req, res) => {
     try {
         const { courseId } = req.body;
         const userId = req.user.id; // From auth middleware
@@ -56,8 +56,8 @@ router.post('/generate', auth, async (req, res) => {
         doc.rect(0, 0, doc.page.width, doc.page.height).stroke();
 
         // Content
-        doc.image('path/to/logo.png', doc.page.width / 2 - 50, 60, { width: 100 }) // Placeholder code, likely to fail if image missing, wrapped in try/catch or ignored
-            .catch(() => { }); // catch image error to prevent crash
+        // doc.image('path/to/logo.png', doc.page.width / 2 - 50, 60, { width: 100 }) 
+        //     .catch(() => { }); 
 
         doc.font('Helvetica-Bold').fontSize(40).fillColor('#1e293b').text('Certificate of Completion', 0, 160, { align: 'center' });
         doc.moveDown();
@@ -94,7 +94,7 @@ router.post('/generate', auth, async (req, res) => {
 });
 
 // Get My Certificates
-router.get('/my', auth, async (req, res) => {
+router.get('/my', protect, async (req, res) => {
     try {
         const certificates = await Certificate.findAll({
             where: { UserId: req.user.id },

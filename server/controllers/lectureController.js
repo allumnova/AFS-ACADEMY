@@ -182,3 +182,35 @@ exports.getLectureProgress = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+exports.getUpcomingLectures = async (req, res) => {
+    try {
+        const { Enrollment, Course } = require('../models');
+        const { Op } = require('sequelize');
+
+        // 1. Get courses user is enrolled in
+        const enrollments = await Enrollment.findAll({
+            where: { userId: req.user.id },
+            attributes: ['courseId']
+        });
+        const courseIds = enrollments.map(e => e.courseId);
+
+        if (courseIds.length === 0) return res.json([]);
+
+        // 2. Get upcoming live lectures for these courses
+        const lectures = await Lecture.findAll({
+            where: {
+                courseId: courseIds,
+                isLive: true,
+                startTime: { [Op.gt]: new Date() }
+            },
+            include: [{ model: Course, as: 'course', attributes: ['title'] }],
+            order: [['startTime', 'ASC']],
+            limit: 5
+        });
+
+        res.json(lectures);
+    } catch (error) {
+        console.error("GET_UPCOMING_LECTURES_ERROR:", error);
+        res.status(500).json({ message: 'Server error fetching upcoming sessions' });
+    }
+};

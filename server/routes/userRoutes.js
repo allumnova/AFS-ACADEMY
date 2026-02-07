@@ -7,6 +7,7 @@ router.post('/admin/faculty', protect, authorize('admin'), require('../controlle
 
 
 router.get('/profile', protect, userController.getProfile);
+router.get('/stats', protect, userController.getStudentStats);
 router.put('/profile', protect, userController.updateProfile);
 router.post('/send-otp', protect, userController.sendOTP);
 router.post('/verify-otp', protect, userController.verifyOTP);

@@ -32,6 +32,8 @@ const Media = sequelize.define('Media', {
         allowNull: true,
     }
 }, {
+    tableName: 'media',
+    freezeTableName: true,
     timestamps: true,
 });
 

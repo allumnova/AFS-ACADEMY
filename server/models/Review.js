@@ -26,8 +26,14 @@ const Review = sequelize.define('Review', {
     comment: {
         type: DataTypes.TEXT,
         allowNull: true,
+    },
+    status: {
+        type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+        defaultValue: 'pending',
     }
 }, {
+    tableName: 'reviews',
+    freezeTableName: true,
     timestamps: true,
 });
 

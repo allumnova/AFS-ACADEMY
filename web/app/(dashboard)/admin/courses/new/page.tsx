@@ -116,15 +116,32 @@ export default function NewCoursePage() {
                             <div className="grid grid-cols-2 gap-4">
                                 <div className="grid gap-2">
                                     <Label htmlFor="category">Category</Label>
-                                    <Select value={formData.category} onValueChange={(val) => handleSelectChange(val, 'category')}>
+                                    <Select
+                                        value={formData.category === "Development" || formData.category === "Design" || formData.category === "Business" || formData.category === "Marketing" ? formData.category : (formData.category ? "Other" : "")}
+                                        onValueChange={(val) => handleSelectChange(val === "Other" ? "" : val, 'category')}
+                                    >
                                         <SelectTrigger id="category"><SelectValue placeholder="Select" /></SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="Development">Development</SelectItem>
                                             <SelectItem value="Design">Design</SelectItem>
                                             <SelectItem value="Business">Business</SelectItem>
+                                            <SelectItem value="Marketing">Marketing</SelectItem>
+                                            <SelectItem value="Other">Other (Custom)</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>
+                                {(formData.category !== "Development" && formData.category !== "Design" && formData.category !== "Business" && formData.category !== "Marketing" && formData.category !== "") && (
+                                    <div className="grid gap-2 animate-in fade-in slide-in-from-left-2 duration-300">
+                                        <Label htmlFor="customCategory" className="text-blue-600 font-bold">Custom Category Name</Label>
+                                        <Input
+                                            id="customCategory"
+                                            placeholder="Enter your custom category"
+                                            value={formData.category === "Other" ? "" : formData.category}
+                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                                            className="border-blue-200 focus:ring-blue-500"
+                                        />
+                                    </div>
+                                )}
                                 <div className="grid gap-2">
                                     <Label htmlFor="level">Level</Label>
                                     <Select value={formData.level} onValueChange={(val) => handleSelectChange(val, 'level')}>

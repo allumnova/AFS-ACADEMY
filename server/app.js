@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 
-const { sequelize } = require('./models'); // Import from models index to ensure associations are loaded
+const { sequelize } = require('./models');
 
 dotenv.config();
 
@@ -13,7 +13,10 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+    origin: ['http://localhost:5555', 'http://localhost:3000', 'https://allumnova.cloud'],
+    credentials: true
+}));
 app.use(express.json());
 app.use(morgan('dev'));
 
@@ -38,6 +41,8 @@ app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/quizzes', require('./routes/quizRoutes'));
 app.use('/api/certificates', require('./routes/certificateRoutes'));
+app.use('/api/batches', require('./routes/batchRoutes'));
+app.use('/api/super-admin', require('./routes/superAdminRoutes'));
 
 // Database Connection and Server Start
 const startServer = async () => {
@@ -46,8 +51,8 @@ const startServer = async () => {
         console.log('Database connected successfully.');
 
         // Sync models (disable force in production)
-        await sequelize.sync({ force: false });
-        console.log('Database synced.');
+        // await sequelize.sync({ force: false });
+        // console.log('Database synced.');
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);

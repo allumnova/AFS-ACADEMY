@@ -135,8 +135,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                Wrap(
+                  alignment: WrapAlignment.spaceEvenly,
+                  spacing: 12, // Horizontal spacing
+                  runSpacing: 12, // Vertical spacing
                   children: [
                     _DemoChip(
                       label: "Admin",

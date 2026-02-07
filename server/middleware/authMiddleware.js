@@ -39,3 +39,10 @@ exports.authorize = (...roles) => {
         next();
     };
 };
+exports.isSuperAdmin = (req, res, next) => {
+    if (req.user && req.user.isSuperAdmin) {
+        next();
+    } else {
+        res.status(403).json({ message: 'Access denied: Super Admin privileges required' });
+    }
+};

@@ -1,7 +1,7 @@
 "use client"
 
-import { useEffect, useState, use } from "react"
-import { useRouter } from "next/navigation"
+import { useEffect, useState } from "react"
+import { useRouter, useParams } from "next/navigation"
 import axios from "axios"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
@@ -21,8 +21,9 @@ import {
     Loader2
 } from "lucide-react"
 
-export default function CourseDetailPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params)
+export default function CourseDetailPage() {
+    const params = useParams()
+    const id = params.id as string
     const router = useRouter()
 
     const [course, setCourse] = useState<any>(null)
@@ -136,10 +137,10 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                     </div>
 
                     {showAddLecture && (
-                        <Card className="border-primary/20 bg-primary/5 animate-in slide-in-from-top-4 duration-300">
+                        <Card className="border-slate-200 bg-white/50 backdrop-blur-sm animate-in slide-in-from-top-4 duration-300">
                             <CardHeader>
-                                <CardTitle className="text-lg text-primary">New Lecture</CardTitle>
-                                <CardDescription>Add a new session to the course curriculum.</CardDescription>
+                                <CardTitle className="text-lg text-slate-900 font-bold">New Lecture</CardTitle>
+                                <CardDescription className="text-slate-500 font-medium">Add a new session to the course curriculum.</CardDescription>
                             </CardHeader>
                             <form onSubmit={handleAddLecture}>
                                 <CardContent className="space-y-4">
@@ -276,9 +277,9 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                         </CardFooter>
                     </Card>
 
-                    <Card className="bg-slate-950 text-white">
+                    <Card className="bg-indigo-50 border-indigo-100 shadow-sm">
                         <CardHeader>
-                            <CardTitle className="text-lg">Quick Stats</CardTitle>
+                            <CardTitle className="text-lg text-indigo-900 font-bold">Quick Stats</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="flex items-center gap-4">
@@ -286,8 +287,8 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
                                     <CheckCircle2 className="h-5 w-5 text-emerald-400" />
                                 </div>
                                 <div>
-                                    <div className="text-2xl font-bold">{course.lectures?.length || 0}</div>
-                                    <div className="text-xs text-slate-400">Total Lectures</div>
+                                    <div className="text-2xl font-bold text-indigo-900">{course?.lectures?.length || 0}</div>
+                                    <div className="text-xs text-indigo-600 font-medium">Total Lectures</div>
                                 </div>
                             </div>
                         </CardContent>
