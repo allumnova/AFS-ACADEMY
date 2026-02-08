@@ -15,7 +15,7 @@ const Batch = sequelize.define('Batch', {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'courses',
+            model: 'Courses',
             key: 'id'
         }
     },
@@ -23,7 +23,7 @@ const Batch = sequelize.define('Batch', {
         type: DataTypes.UUID,
         allowNull: true,
         references: {
-            model: 'users',
+            model: 'Users',
             key: 'id'
         }
     },

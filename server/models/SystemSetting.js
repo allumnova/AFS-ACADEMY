@@ -25,7 +25,7 @@ const SystemSetting = sequelize.define('SystemSetting', {
         allowNull: true,
     }
 }, {
-    tableName: 'system_settings',
+    tableName: 'SystemSettings',
     freezeTableName: true,
     timestamps: true,
 });

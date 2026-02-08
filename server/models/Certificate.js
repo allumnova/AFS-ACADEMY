@@ -29,7 +29,7 @@ const Certificate = sequelize.define('Certificate', {
         allowNull: false
     }
 }, {
-    tableName: 'certificates',
+    tableName: 'Certificates',
     freezeTableName: true,
     timestamps: true
 });

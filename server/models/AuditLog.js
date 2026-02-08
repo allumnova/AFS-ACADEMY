@@ -32,7 +32,7 @@ const AuditLog = sequelize.define('AuditLog', {
         allowNull: true,
     }
 }, {
-    tableName: 'audit_logs',
+    tableName: 'AuditLogs',
     freezeTableName: true,
     timestamps: true,
     indexes: [

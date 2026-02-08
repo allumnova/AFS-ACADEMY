@@ -11,7 +11,7 @@ const BatchStudent = sequelize.define('BatchStudent', {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'batches',
+            model: 'Batches',
             key: 'id'
         }
     },
@@ -19,7 +19,7 @@ const BatchStudent = sequelize.define('BatchStudent', {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'users',
+            model: 'Users',
             key: 'id'
         }
     },
@@ -32,7 +32,7 @@ const BatchStudent = sequelize.define('BatchStudent', {
         defaultValue: 'active',
     }
 }, {
-    tableName: 'batch_students',
+    tableName: 'BatchStudents',
     freezeTableName: true,
     timestamps: true,
     indexes: [

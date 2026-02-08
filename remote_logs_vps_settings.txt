@@ -1,0 +1,103 @@
+afs-server  | GET_ALL_BATCHES_ERROR: Error
+afs-server  |     at Query.run (/app/node_modules/sequelize/lib/dialects/mysql/query.js:52:25)
+afs-server  |     at /app/node_modules/sequelize/lib/sequelize.js:315:28
+afs-server  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+afs-server  |     at async MySQLQueryInterface.select (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+afs-server  |     at async Batch.findAll (/app/node_modules/sequelize/lib/model.js:1140:21)
+afs-server  |     at async exports.getAllBatches (/app/controllers/batchController.js:33:25) {
+afs-server  |   name: 'SequelizeDatabaseError',
+afs-server  |   parent: Error: Table 'afs_academy.Batches' doesn't exist
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_NO_SUCH_TABLE',
+afs-server  |     errno: 1146,
+afs-server  |     sqlState: '42S02',
+afs-server  |     sqlMessage: "Table 'afs_academy.Batches' doesn't exist",
+afs-server  |     sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   original: Error: Table 'afs_academy.Batches' doesn't exist
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_NO_SUCH_TABLE',
+afs-server  |     errno: 1146,
+afs-server  |     sqlState: '42S02',
+afs-server  |     sqlMessage: "Table 'afs_academy.Batches' doesn't exist",
+afs-server  |     sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |   parameters: {}
+afs-server  | }
+afs-server  | [0mGET /api/batches [31m500[0m 13.316 ms - 43[0m
+afs-server  | [0mGET /api/admin/students [36m304[0m 8.282 ms - -[0m
+afs-server  | [0mGET /api/courses [36m304[0m 6.956 ms - -[0m
+afs-server  | [0mGET /api/admin/students [36m304[0m 7.759 ms - -[0m
+afs-server  | GET_ALL_BATCHES_ERROR: Error
+afs-server  |     at Query.run (/app/node_modules/sequelize/lib/dialects/mysql/query.js:52:25)
+afs-server  |     at /app/node_modules/sequelize/lib/sequelize.js:315:28
+afs-server  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+afs-server  |     at async MySQLQueryInterface.select (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+afs-server  |     at async Batch.findAll (/app/node_modules/sequelize/lib/model.js:1140:21)
+afs-server  |     at async exports.getAllBatches (/app/controllers/batchController.js:33:25) {
+afs-server  |   name: 'SequelizeDatabaseError',
+afs-server  |   parent: Error: Table 'afs_academy.Batches' doesn't exist
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_NO_SUCH_TABLE',
+afs-server  |     errno: 1146,
+afs-server  |     sqlState: '42S02',
+afs-server  |     sqlMessage: "Table 'afs_academy.Batches' doesn't exist",
+afs-server  |     sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   original: Error: Table 'afs_academy.Batches' doesn't exist
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_NO_SUCH_TABLE',
+afs-server  |     errno: 1146,
+afs-server  |     sqlState: '42S02',
+afs-server  |     sqlMessage: "Table 'afs_academy.Batches' doesn't exist",
+afs-server  |     sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   sql: 'SELECT `Batch`.`id`, `Batch`.`name`, `Batch`.`courseId`, `Batch`.`instructorId`, `Batch`.`startDate`, `Batch`.`endDate`, `Batch`.`startTime`, `Batch`.`endTime`, `Batch`.`days`, `Batch`.`status`, `Batch`.`maxCapacity`, `Batch`.`createdAt`, `Batch`.`updatedAt`, `course`.`id` AS `course.id`, `course`.`title` AS `course.title`, `instructor`.`id` AS `instructor.id`, `instructor`.`name` AS `instructor.name` FROM `Batches` AS `Batch` LEFT OUTER JOIN `Courses` AS `course` ON `Batch`.`courseId` = `course`.`id` LEFT OUTER JOIN `Users` AS `instructor` ON `Batch`.`instructorId` = `instructor`.`id` ORDER BY `Batch`.`createdAt` DESC;',
+afs-server  |   parameters: {}
+afs-server  | }
+afs-server  | [0mGET /api/batches [31m500[0m 6.097 ms - 43[0m
+afs-server  | [0mGET /api/courses [36m304[0m 4.289 ms - -[0m
+
+ERRORS:
+time="2026-02-08T07:12:02Z" level=warning msg="/root/AFS-ACADEMY/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"

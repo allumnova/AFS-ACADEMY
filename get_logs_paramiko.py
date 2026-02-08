@@ -15,18 +15,15 @@ def get_logs():
         cmd = f"cd {PROJECT_DIR} && docker compose logs server --tail=100"
         stdin, stdout, stderr = client.exec_command(cmd)
         
-        cmd = f"docker exec afs-db mysql -u root -proot -D afs_academy -e 'DESCRIBE Payments;'"
-        stdin, stdout, stderr = client.exec_command(cmd)
-        
         output = stdout.read().decode()
         error = stderr.read().decode()
         
-        with open('vps_table_structure_cap.txt', 'w', encoding='utf-8') as f:
+        with open('remote_logs_vps_settings.txt', 'w', encoding='utf-8') as f:
             f.write(output)
             f.write("\nERRORS:\n")
             f.write(error)
         
-        print("Structure saved to vps_table_structure_cap.txt")
+        print("Logs saved to remote_logs_vps_settings.txt")
             
         client.close()
     except Exception as e:
