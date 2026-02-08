@@ -32,7 +32,7 @@ const Media = sequelize.define('Media', {
         allowNull: true,
     }
 }, {
-    tableName: 'media',
+    tableName: 'Media',
     freezeTableName: true,
     timestamps: true,
 });

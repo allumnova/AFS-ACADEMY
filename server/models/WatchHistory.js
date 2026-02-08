@@ -37,7 +37,7 @@ const WatchHistory = sequelize.define('WatchHistory', {
         defaultValue: DataTypes.NOW,
     }
 }, {
-    tableName: 'watchhistories',
+    tableName: 'WatchHistories',
     freezeTableName: true,
     timestamps: true,
     indexes: [

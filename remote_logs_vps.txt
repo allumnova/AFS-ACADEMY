@@ -1,0 +1,103 @@
+afs-server  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+afs-server  |     at async MySQLQueryInterface.createTable (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:98:12)
+afs-server  |     at async Course.sync (/app/node_modules/sequelize/lib/model.js:942:7)
+afs-server  |     at async Sequelize.sync (/app/node_modules/sequelize/lib/sequelize.js:377:9)
+afs-server  |     at async startServer (/app/app.js:54:9) {
+afs-server  |   name: 'SequelizeDatabaseError',
+afs-server  |   parent: Error: Duplicate foreign key constraint name 'courses_ibfk_1'
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_FK_DUP_NAME',
+afs-server  |     errno: 1826,
+afs-server  |     sqlState: 'HY000',
+afs-server  |     sqlMessage: "Duplicate foreign key constraint name 'courses_ibfk_1'",
+afs-server  |     sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   original: Error: Duplicate foreign key constraint name 'courses_ibfk_1'
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_FK_DUP_NAME',
+afs-server  |     errno: 1826,
+afs-server  |     sqlState: 'HY000',
+afs-server  |     sqlMessage: "Duplicate foreign key constraint name 'courses_ibfk_1'",
+afs-server  |     sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |   parameters: {}
+afs-server  | }
+afs-server  | Failed SQL: CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+afs-server  | 
+afs-server  | > server@1.0.0 start
+afs-server  | > node app.js
+afs-server  | 
+afs-server  | Database connected successfully.
+afs-server  | CRITICAL: Unable to connect to the database or sync failed: Error
+afs-server  |     at Query.run (/app/node_modules/sequelize/lib/dialects/mysql/query.js:52:25)
+afs-server  |     at /app/node_modules/sequelize/lib/sequelize.js:315:28
+afs-server  |     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+afs-server  |     at async MySQLQueryInterface.createTable (/app/node_modules/sequelize/lib/dialects/abstract/query-interface.js:98:12)
+afs-server  |     at async Course.sync (/app/node_modules/sequelize/lib/model.js:942:7)
+afs-server  |     at async Sequelize.sync (/app/node_modules/sequelize/lib/sequelize.js:377:9)
+afs-server  |     at async startServer (/app/app.js:54:9) {
+afs-server  |   name: 'SequelizeDatabaseError',
+afs-server  |   parent: Error: Duplicate foreign key constraint name 'courses_ibfk_1'
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_FK_DUP_NAME',
+afs-server  |     errno: 1826,
+afs-server  |     sqlState: 'HY000',
+afs-server  |     sqlMessage: "Duplicate foreign key constraint name 'courses_ibfk_1'",
+afs-server  |     sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   original: Error: Duplicate foreign key constraint name 'courses_ibfk_1'
+afs-server  |       at Packet.asError (/app/node_modules/mysql2/lib/packets/packet.js:740:17)
+afs-server  |       at Query.execute (/app/node_modules/mysql2/lib/commands/command.js:29:26)
+afs-server  |       at Connection.handlePacket (/app/node_modules/mysql2/lib/base/connection.js:508:34)
+afs-server  |       at PacketParser.onPacket (/app/node_modules/mysql2/lib/base/connection.js:93:12)
+afs-server  |       at PacketParser.executeStart (/app/node_modules/mysql2/lib/packet_parser.js:75:16)
+afs-server  |       at Socket.<anonymous> (/app/node_modules/mysql2/lib/base/connection.js:100:25)
+afs-server  |       at Socket.emit (node:events:524:28)
+afs-server  |       at Socket.emit (node:domain:489:12)
+afs-server  |       at addChunk (node:internal/streams/readable:561:12)
+afs-server  |       at readableAddChunkPushByteMode (node:internal/streams/readable:512:3) {
+afs-server  |     code: 'ER_FK_DUP_NAME',
+afs-server  |     errno: 1826,
+afs-server  |     sqlState: 'HY000',
+afs-server  |     sqlMessage: "Duplicate foreign key constraint name 'courses_ibfk_1'",
+afs-server  |     sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |     parameters: undefined
+afs-server  |   },
+afs-server  |   sql: "CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;",
+afs-server  |   parameters: {}
+afs-server  | }
+afs-server  | Failed SQL: CREATE TABLE IF NOT EXISTS `courses` (`id` CHAR(36) BINARY , `title` VARCHAR(255) NOT NULL, `description` TEXT NOT NULL, `price` DECIMAL(10,2) NOT NULL DEFAULT 0, `thumbnail` VARCHAR(255), `category` VARCHAR(255) NOT NULL, `level` VARCHAR(255) DEFAULT 'beginner', `instructorId` CHAR(36) BINARY, `createdAt` DATETIME NOT NULL, `updatedAt` DATETIME NOT NULL, PRIMARY KEY (`id`), FOREIGN KEY (`instructorId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE) ENGINE=InnoDB;
+
+ERRORS:
+time="2026-02-08T07:00:57Z" level=warning msg="/root/AFS-ACADEMY/docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"

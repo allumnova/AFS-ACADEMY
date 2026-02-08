@@ -1,0 +1,17 @@
+Field	Type	Null	Key	Default	Extra
+id	char(36)	NO	PRI	NULL	
+userId	char(36)	NO	MUL	NULL	
+courseId	char(36)	YES	MUL	NULL	
+amount	decimal(10,2)	NO		NULL	
+currency	varchar(255)	YES		INR	
+cfOrderId	varchar(255)	NO	UNI	NULL	
+cfPaymentId	varchar(255)	YES		NULL	
+paymentSessionId	varchar(255)	YES		NULL	
+paymentMethod	varchar(255)	YES		NULL	
+status	enum('pending','completed','failed','refunded')	YES		pending	
+paymentDate	datetime	YES		NULL	
+createdAt	datetime	NO		NULL	
+updatedAt	datetime	NO		NULL	
+
+ERRORS:
+mysql: [Warning] Using a password on the command line interface can be insecure.

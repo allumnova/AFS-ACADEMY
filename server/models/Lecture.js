@@ -48,7 +48,7 @@ const Lecture = sequelize.define('Lecture', {
         allowNull: true,
     }
 }, {
-    tableName: 'lectures',
+    tableName: 'Lectures',
     freezeTableName: true,
     timestamps: true,
 });

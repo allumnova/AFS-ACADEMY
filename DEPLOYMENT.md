@@ -49,7 +49,25 @@ chmod +x scripts/deploy.sh
 ./scripts/deploy.sh
 ```
 
-## 5. Accessing the App
+## 5. One-Click Deployment (Recommended)
+We have set up an automated script for easy updates.
+
+**Prerequisites:**
+- Python installed on your local machine.
+- `paramiko` library installed: `pip install paramiko`
+
+**How to Update:**
+1.  Make your code changes.
+2.  Commit your changes: `git commit -am "your message"`.
+3.  Double-click `easy_deploy.bat` in the project root.
+
+This script will automatically:
+1.  Push your code to GitHub.
+2.  Connect to the VPS.
+3.  Pull the updates.
+4.  Rebuild and restart the application.
+
+## 6. Accessing the App
 By default:
 - Server will run on port 3000 (or as defined in your .env)
 - Web will run on port 3000 (Next.js default) - **Conflict Alert**: Change one of them!

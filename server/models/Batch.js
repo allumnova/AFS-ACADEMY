@@ -56,7 +56,7 @@ const Batch = sequelize.define('Batch', {
         defaultValue: 30,
     }
 }, {
-    tableName: 'batches',
+    tableName: 'Batches',
     freezeTableName: true,
     timestamps: true,
 });

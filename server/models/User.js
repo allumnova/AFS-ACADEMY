@@ -56,7 +56,7 @@ const User = sequelize.define('User', {
         defaultValue: true,
     }
 }, {
-    tableName: 'users',
+    tableName: 'Users',
     freezeTableName: true,
     timestamps: true,
     indexes: [

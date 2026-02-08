@@ -32,7 +32,7 @@ const Enrollment = sequelize.define('Enrollment', {
         defaultValue: 0,
     }
 }, {
-    tableName: 'enrollments',
+    tableName: 'Enrollments',
     freezeTableName: true,
     timestamps: true,
     indexes: [

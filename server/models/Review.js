@@ -32,7 +32,7 @@ const Review = sequelize.define('Review', {
         defaultValue: 'pending',
     }
 }, {
-    tableName: 'reviews',
+    tableName: 'Reviews',
     freezeTableName: true,
     timestamps: true,
 });

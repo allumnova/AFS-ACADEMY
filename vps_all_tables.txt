@@ -1,0 +1,16 @@
+Tables_in_afs_academy
+Attendances
+Courses
+Enrollments
+Lectures
+Media
+Notifications
+Payments
+QuizResults
+Quizzes
+Reviews
+Users
+users
+
+ERRORS:
+mysql: [Warning] Using a password on the command line interface can be insecure.
