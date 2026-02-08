@@ -51,15 +51,18 @@ const startServer = async () => {
         console.log('Database connected successfully.');
 
         // Sync models (disable force in production)
-        // await sequelize.sync({ force: false });
-        // console.log('Database synced.');
+        await sequelize.sync({ alter: true });
+        console.log('Database synced.');
 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`);
         });
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
-        require('fs').writeFileSync('startup_error.txt', JSON.stringify(error, Object.getOwnPropertyNames(error)));
+        console.error('CRITICAL: Unable to connect to the database or sync failed:', error);
+        if (error.sql) {
+            console.error('Failed SQL:', error.sql);
+        }
+        require('fs').writeFileSync('startup_error.txt', JSON.stringify(error, Object.getOwnPropertyNames(error), 2));
         process.exit(1);
     }
 };
